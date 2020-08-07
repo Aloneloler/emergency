@@ -1,0 +1,601 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable no-unused-lets */
+import React from 'react';
+import styles from './styles.less';
+import { connect } from 'dva';
+import Feature from 'ol/Feature';
+import Map from 'ol/Map';
+import Overlay from 'ol/Overlay';
+import View from 'ol/View';
+import Point from 'ol/geom/Point';
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import Stamen from 'ol/source/Stamen'
+import XYZ from 'ol/source/XYZ';
+import VectorSource from 'ol/source/Vector';
+import { Icon, Style, CircleStyle, Fill, Stroke } from 'ol/style';
+import { fromLonLat, transform } from 'ol/proj'
+import 'ol/ol.css';
+import Circle from 'ol/geom/Circle';
+import $ from 'jquery'
+// import * as POL from '../../CollaborativePlotting/plottingol'
+
+import dangericon from '../../../assets/GisDispatching/dangericon.png'
+import team from '../../../assets/GisDispatching/team.png'
+import car from '../../../assets/GisDispatching/car.png'
+import wurenji from '../../../assets/GisDispatching/wurenji.png'
+import video from '../../../assets/GisDispatching/video.png'
+
+function mapStateToProps({ GisModel }) {
+    return {
+        GisModel: GisModel
+    };
+}
+
+// let ol = POL.POL().OL;
+// let polObj = POL.POL();
+// let g_op_feature = null;
+@connect(mapStateToProps)
+class MapOpenlayers extends React.Component {
+    constructor(props) {
+        super(props);
+        this.map = null;
+        this.detailsInfo = true
+        this.state = {
+            DetailsShow: false,
+            liOnclickVal: false,
+            pointData: [
+                { name: 'dangericon', coordinates: [118.211517333984375, 39.638645263788256] },
+                { name: 'video', coordinates: [118.204693794250488, 39.642511816485239] },
+                { name: 'video', coordinates: [118.214349746704102, 39.639636708164801] },
+                { name: 'video', coordinates: [118.208212852478027, 39.634745444683674] },
+                { name: 'video', coordinates: [118.20065975189209, 39.640132425023424] },
+                { name: 'video', coordinates: [118.216795921325684, 39.649087764285113] },
+                { name: 'video', coordinates: [118.198127746582031, 39.646477286998653] },
+                { name: 'video', coordinates: [118.199672698974609, 39.654605790607668] },
+                { name: 'team', coordinates: [118.227567672729492, 39.635836094207583] },
+                { name: 'team', coordinates: [118.21713924407959, 39.635621270661375] },
+                { name: 'team', coordinates: [118.205208778381348, 39.650128623313201] },
+                { name: 'team', coordinates: [118.204457759857178, 39.651896395595138] },
+                { name: 'team', coordinates: [118.200058937072754, 39.644973739527941] },
+                { name: 'team', coordinates: [118.206624984741211, 39.633059861595058] },
+                { name: 'team', coordinates: [118.220572471618652, 39.650112101863712] },
+                { name: 'team', coordinates: [118.206238746643066, 39.655696126925854] },
+                { name: 'team', coordinates: [118.210701942443848, 39.647171220958192] },
+                { name: 'team', coordinates: [118.214349746704102, 39.643800619345647] },
+                { name: 'car', coordinates: [118.202118873596191, 39.644098031979283] },
+                { name: 'car', coordinates: [118.200531005859375, 39.634844595350998] },
+                { name: 'car', coordinates: [118.211002349853516, 39.629093621725829] },
+                { name: 'wurenji', coordinates: [118.215551376342773, 39.6311428740499] },
+                { name: 'wurenji', coordinates: [118.221302032470703, 39.640661185756294] },
+            ],
+            circlePointData: [
+                { name: 'dangericon', coordinates: [118.211517333984375, 39.638645263788256] },
+                { name: 'team', coordinates: [118.214349746704102, 39.643800619345647] },
+                { name: 'video', coordinates: [118.214349746704102, 39.639636708164801] },
+                { name: 'team', coordinates: [118.21713924407959, 39.635621270661375] },
+                { name: 'video', coordinates: [118.208212852478027, 39.634745444683674] },
+                { name: 'team', coordinates: [118.206624984741211, 39.633059861595058] },
+            ],
+            PlotPointData: [
+                { type: 'DOUBLE_ARROW', coordinates: [[13158567.536893351, 4815341.689395384], [13159145.591919757, 4814959.504253958], [13159236.360890847, 4813750.843744199], [13159112.150719883, 4813698.293287253], [13158856.564406555, 4815150.596824671]] }
+            ]
+        };
+    }
+
+    //渲染前调用
+    componentWillMount() {
+
+    }
+
+    //渲染后调用
+    componentDidMount() {
+        this.mapInit()
+        this.callback()
+        // this.callBackDraw()
+    }
+    //卸载时调用
+    componentWillUnmount() {
+
+    }
+
+    //改变时调用
+    componentWillReceiveProps(nextprops) {
+        if (!nextprops.GisModel.DetailsShow) {
+            this.closeLayer();
+        }
+    }
+
+    getIconStyle = (data) => {
+        let src = null;
+        if (data === "dangericon") {
+            src = dangericon;
+        } else if (data === "team") {
+            src = team
+        } else if (data === "car") {
+            src = car
+        } else if (data === "wurenji") {
+            src = wurenji
+        } else if (data === "video") {
+            src = video
+        }
+        return new Style({
+            image: new Icon(({
+                anchor: [0.5, 46],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                src: src,
+            }))
+        });
+    }
+
+    mapInit = () => {
+        let that = this
+        //地图图层
+        let rasterLayer = new TileLayer({
+            visible: true,
+            preload: Infinity,
+            source: new XYZ({
+                url: 'http://t2.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=95bb7d5de26efd8786b9eee721fd450e'
+            }),
+            name: 'basemap'
+        });
+        let rasterLayer1 = new TileLayer({
+            visible: true,
+            preload: Infinity,
+            source: new XYZ({
+                url: 'http://t2.tianditu.com/DataServer?T=cia_w&x={x}&y={y}&l={z}&tk=95bb7d5de26efd8786b9eee721fd450e'
+            }),
+            name: 'basemap1'
+        });
+        this.map = new Map({
+            layers: [rasterLayer, rasterLayer1],
+            target: 'map',
+            view: new View({
+                center: fromLonLat([118.211517333984375, 39.638645263788256]),
+                zoom: 15
+            })
+        });
+      
+    }
+    closeLayer = () => {
+        this.detailsInfo = true
+        let layersVal = this.map.getLayers();
+        if (layersVal.array_.length > 2) {
+            this.map.removeLayer(this.vectorLayerDetails);
+            this.map.addLayer(this.vectorLayer);
+        }
+    }
+    callback = () => {
+        let { DetailsShow } = this.state;
+        let { pointData, circlePointData } = this.state
+        let pointArr = []
+        let pointArr1 = []
+        //初始进入地图的点
+        for (let i in pointData) {
+            let iconFeature = new Feature({
+                geometry: new Point(fromLonLat(pointData[i].coordinates)),
+                "properties": { "id": 'Point' + i, 'type': pointData[i].name },
+            });
+            pointArr.push(iconFeature)
+        }
+        let vectorSource = new VectorSource({
+        });
+        vectorSource.addFeatures(pointArr);
+        //详情
+        //点击详情圈内的点
+        for (let i in circlePointData) {
+            let iconFeature1 = new Feature({
+                geometry: new Point(fromLonLat(circlePointData[i].coordinates)),
+                "properties": { "id": 'Point' + i, 'type': circlePointData[i].name },
+            });
+            pointArr1.push(iconFeature1)
+        }
+        let vectorSource1 = new VectorSource({
+        });
+        vectorSource1.addFeatures(pointArr1);
+        //添加圆形面
+        //圆心
+        // let centerradius = new Circle([118.211517333984375, 39.638645263788256], 0.009);//84坐标系
+        // centerradius = centerradius.clone().transform('EPSG:4326', 'EPSG:3857');
+        let centerradius = new Circle(transform([118.211517333984375, 39.638645263788256], 'EPSG:4326', 'EPSG:3857'), 1000, 'XY')//转为EPSG:3857坐标系显示圆。半径单位为米
+        // centerradius = centerradius.transform('EPSG:3857', 'EPSG:4326');
+        // // centerradius.transform('EPSG:4326', 'EPSG:3857')
+        // // centerradius.setCenter()
+        // // centerradius.setRadius(900)
+        let circlefeature = new Feature({
+            geometry: centerradius,
+            "properties": { "id": 'Circle', 'type': 'circle' },
+        });
+        circlefeature.setStyle(MyStyle(circlefeature));
+        vectorSource1.addFeature(circlefeature);
+        //相应的圆的样式
+        function MyStyle() {
+            //返回一个样式
+            return new Style({
+                stroke: new Stroke({
+                    color: 'rgba(255,0,0,0.3)',
+                    width: 2
+                }),
+                fill: new Fill({
+                    color: 'rgba(255,0,0,0.3)'
+                })
+            })
+        }
+        //点图层
+        let that = this;
+        let styleFunction = function (feature) {
+            let type = feature.getProperties().properties.type;
+            return that.getIconStyle(type);
+        };
+        this.vectorLayer = new VectorLayer({
+            source: vectorSource,
+            style: styleFunction
+        });
+        this.vectorLayerDetails = new VectorLayer({
+            source: vectorSource1,
+            style: styleFunction
+        });
+        if (!DetailsShow) {
+            this.setState({
+                DetailsShow: true
+            })
+            this.map.removeLayer(that.vectorLayerDetails);
+            this.map.addLayer(that.vectorLayer);
+        }
+        //写popup样式
+        this.addOverlayStyle()
+        //地图事件点机事件
+        that.map.on('click', function (e) {
+            //在点击时获取像素区域
+            let pixel = that.map.getEventPixel(e.originalEvent);
+            that.propUpShow(that.map.getFeaturesAtPixel(pixel)[0])
+        })
+    }
+    // callBackDraw = () => {
+    //     console.log('sssssssss', ol)
+    //     console.log('dddddddddddd', POL.POL())
+    //     let { PlotPointData } = this.state;
+    //     for (let i in PlotPointData) {
+    //         // let stroke = new ol.style.Stroke({ color: '#FF0000', width: 2 });
+    //         // let fill = new ol.style.Fill({ color: 'rgba(0,255,0,0.4)' });
+    //         // this.style = new ol.style.Style({ fill: fill, stroke: stroke });
+    //         this.featureSource = new ol.source.Vector();
+    //         let polygon = polObj.PlotFactory.createPlot(PlotPointData[i].type, PlotPointData[i].coordinates);
+    //         this.polygonfeature = new ol.Feature(polygon)
+    //         this.featureSource.addFeature(this.polygonfeature)
+    //         this.showLayer = POL.POL().PlottingLayer.prototype._createShowLayer();
+    //         // this.showLayer.setStyle(this.style);
+    //         this.showLayer.setSource(this.featureSource);
+    //         this.map.addLayer(this.showLayer);
+            
+    //         // new polObj.FeatureOperator(this.polygonfeature, this.showLayer, 1)
+    //         // POL.POL().PlottingLayer.prototype._onDrawEnd(event)
+    //         // POL.POL().PlottingLayer.prototype._addFeature(this.polygonfeature)
+
+    //         // this.featureSource.addFeature(this.polygonfeature)
+    //     }
+    //     // polygonLayer.setMap(this.map)
+    //     // this.map.addLayer(polygonLayer)
+    // }
+    //定义弹框样式
+    addOverlayStyle = () => {
+        let { dispatch } = this.props;
+        let that = this;
+        //添加弹出框
+        //突发事件框
+        let div = document.createElement("div");
+        let div1 = document.createElement("div");
+        div1.style.background = 'white';
+        div1.style.width = '200px';
+        div1.style.minHeight = '100px';
+        div1.style.maxHeight = '600px';
+        div1.style.padding = '10px';
+        div1.style.position = 'absolute';
+        div1.style.left = '-90px';
+        div1.style.top = '-180px';
+        div1.style.borderRadius = '6px';
+        let div2 = document.createElement("div");
+        div2.style.borderRight = ' 10px solid transparent';
+        div2.style.borderLeft = '10px solid transparent';
+        div2.style.borderTop = '10px solid white';
+        div2.style.position = 'absolute';
+        div2.style.zIndex = 1;
+        div2.style.marginTop = '119px';
+        div2.style.marginLeft = '70px';
+        let h3 = document.createElement("h3");
+        h3.innerHTML = "车祸事故";
+        let p = document.createElement("p");
+        p.innerHTML = "我市XX区化工厂发生厂区爆炸，无人员伤亡";
+        let a = document.createElement("a")
+        a.innerHTML = "查看详情"
+        a.style.cursor = 'pointer'
+        a.addEventListener("click", function () {
+            that.map.removeLayer(that.vectorLayer);
+            that.map.addLayer(that.vectorLayerDetails);
+            that.map.removeOverlay(that.overlay);
+            that.detailsInfo = false
+            dispatch({
+                type: 'GisModel/setDetailsShow',
+                payload: true,
+            })
+        })
+        div1.appendChild(div2);
+        div1.appendChild(h3);
+        div1.appendChild(p);
+        div1.appendChild(a)
+        div.appendChild(div1);
+        this.overlay = new Overlay({
+            //设置弹出框的容器
+            element: div,
+            //是否自动平移，即假如标记在屏幕边缘，弹出时自动平移地图使弹出框完全可见
+            autoPan: true
+        });
+        //视频框
+        let videoDiv = document.createElement("div");
+        videoDiv.style.background = 'white';
+        videoDiv.style.width = '200px';
+        videoDiv.style.minHeight = '129px';
+        videoDiv.style.maxHeight = '600px';
+        videoDiv.style.padding = '10px';
+        videoDiv.style.position = 'absolute';
+        videoDiv.style.left = '-90px';
+        videoDiv.style.top = '-180px';
+        videoDiv.style.borderRadius = '6px';
+        let videoDiv2 = document.createElement("div");
+        videoDiv2.style.borderRight = ' 10px solid transparent';
+        videoDiv2.style.borderLeft = '10px solid transparent';
+        videoDiv2.style.borderTop = '10px solid white';
+        videoDiv2.style.position = 'absolute';
+        videoDiv2.style.zIndex = 1;
+        videoDiv2.style.marginTop = '119px';
+        videoDiv2.style.marginLeft = '70px';
+        videoDiv.appendChild(videoDiv2)
+        let video = document.createElement("video");
+        video.src = require('@/assets/GisDispatching/videos3.mp4');
+        video.style.width = '180px';
+        video.style.height = '104px';
+        video.autoplay = true
+        video.loop = true
+        video.controls = 'controls'
+        videoDiv.appendChild(video)
+        this.overlayVideo = new Overlay({
+            element: videoDiv,
+            autoPan: true
+        });
+        //救援队伍框
+        let teamDiv = document.createElement("div");
+        teamDiv.style.background = 'black';
+        teamDiv.style.opacity = 0.8;
+        teamDiv.style.width = '178px';
+        teamDiv.style.minHeight = '80px';
+        teamDiv.style.padding = '10px';
+        teamDiv.style.position = 'absolute';
+        teamDiv.style.left = '-90px';
+        teamDiv.style.top = '-133px';
+        teamDiv.style.borderRadius = '6px';
+        let teamDiv2 = document.createElement("div");
+        teamDiv2.style.borderRight = ' 10px solid transparent';
+        teamDiv2.style.borderLeft = '10px solid transparent';
+        teamDiv2.style.borderTop = '10px solid black';
+        teamDiv2.style.position = 'absolute';
+        teamDiv2.style.zIndex = 1;
+        teamDiv2.style.marginTop = '70px';
+        teamDiv2.style.marginLeft = '70px';
+        let addressDiv = document.createElement("p");
+        addressDiv.innerHTML = 'XXX（第XX中队）';
+        addressDiv.style.lineHeight = '15px';
+        addressDiv.style.position = 'absolute';
+        addressDiv.style.fontSize = '14px';
+        addressDiv.style.color = 'white';
+        addressDiv.style.top = '15px';
+        addressDiv.style.left = '40px';
+        let zhuanyeduiImg = document.createElement('img');
+        zhuanyeduiImg.src = require('@/assets/GisDispatching/zhuanyedui.png');
+        zhuanyeduiImg.style.width = '15px';
+        zhuanyeduiImg.style.position = 'absolute';
+        zhuanyeduiImg.style.float = 'left';
+        zhuanyeduiImg.style.top = '15px';
+        zhuanyeduiImg.style.left = '15px';
+        let telImg = document.createElement('img');
+        telImg.src = require('@/assets/GisDispatching/call.png');
+        telImg.style.width = '18px';
+        telImg.style.height = '18px';
+        telImg.style.top = '45px';
+        telImg.style.left = '40px';
+        telImg.style.position = 'absolute'
+        // telImg.addEventListener('click', () => this.mapIconClick(1), false);
+        let videoImg = document.createElement('img');
+        videoImg.src = require('@/assets/GisDispatching/shipin.png');
+        videoImg.style.width = '18px';
+        videoImg.style.height = '18px';
+        videoImg.style.top = '45px';
+        videoImg.style.left = '80px';
+        videoImg.style.position = 'absolute'
+        // videoImg.addEventListener('click', () => this.mapIconClick(2), false);
+        let issueImg = document.createElement("img");
+        issueImg.src = require('@/assets/GisDispatching/note.png');
+        issueImg.style.width = '18px';
+        issueImg.style.height = '18px';
+        issueImg.style.top = '45px';
+        issueImg.style.left = '120px';
+        issueImg.style.position = 'absolute'
+        teamDiv.appendChild(zhuanyeduiImg)
+        teamDiv.appendChild(addressDiv);
+        teamDiv.appendChild(telImg);
+        teamDiv.appendChild(videoImg);
+        teamDiv.appendChild(issueImg);
+        teamDiv.appendChild(teamDiv2)
+        this.overlayTeam = new Overlay({
+            element: teamDiv,
+            autoPan: true
+        });
+    }
+    //增加弹框图层
+    propUpShow = (feature) => {
+        let that = this;
+        let coodinate = null
+        //coodinate存放了点击时的坐标信息
+        if (feature !== undefined) {
+            coodinate = feature?.values_.geometry.flatCoordinates
+            if (feature.values_.properties.type === 'dangericon') {
+                //设置overlay的显示位置
+                that.overlay.setPosition(coodinate);
+                //显示overlay
+                if (that.detailsInfo) {
+                    that.map.addOverlay(that.overlay);
+                }
+            } else if (feature.values_.properties.type === 'video' || feature.values_.properties.type === 'wurenji') {
+                //设置overlay的显示位置
+                that.overlayVideo.setPosition(coodinate);
+                //显示overlay
+                that.map.addOverlay(that.overlayVideo);
+            } else if (feature.values_.properties.type === 'team') {
+                //设置overlay的显示位置
+                that.overlayTeam.setPosition(coodinate);
+                //显示overlay
+                that.map.addOverlay(that.overlayTeam);
+            } else if (feature.values_.properties.type === 'circle') {
+                coodinate = null
+            }
+        }
+        if (!coodinate) {
+            that.map.removeOverlay(that.overlay);
+            that.map.removeOverlay(that.overlayVideo);
+            that.map.removeOverlay(that.overlayTeam);
+        }
+    }
+
+    // // 指定标绘类型，开始绘制。
+    // activate = (type) => {
+    //     this.g_pol_layer.addFeature(type);
+    // };
+
+    // DelBtnClick = () => {
+    //     this.g_pol_layer.removeFeature(g_op_feature);
+    //     g_op_feature = null;
+    // }
+    // //标绘方法等
+    // activeDelBtn = () => {
+    //     this.get('btn-delete').style.display = 'inline-block';
+    // }
+
+    // deactiveDelBtn = () => {
+    //     this.get('btn-delete').style.display = 'none';
+    // }
+    // get = (domId) => {
+    //     return document.getElementById(domId);
+    // }
+    // plotOperator = (method, no_need_feature) => {
+    //     if (!g_op_feature) {
+    //         alert('请先选择一个标绘图元')
+    //         return;
+    //     }
+    //     this.g_pol_layer[method](g_op_feature);
+    // }
+    // setPlotActive = (isActive) => {
+    //     if (!g_op_feature) {
+    //         alert('请先选择一个标绘图元.屏蔽点击后将无法通过点击获取图元')
+    //         return;
+    //     }
+    //     if (isActive)
+    //         g_op_feature.enable()
+    //     else
+    //         g_op_feature.disable()
+    // }
+
+    // setStyle = (params) => {
+    //     if (!g_op_feature) {
+    //         alert('请先选择一个标绘图元')
+    //         return;
+    //     }
+    //     let styles_value = document.getElementById('style-input').value;
+    //     g_op_feature.setStyle(JSON.parse(styles_value))
+    // }
+    // addAttribute = () => {
+    //     if (!g_op_feature) {
+    //         alert('请先选择一个标绘图元')
+    //         return;
+    //     }
+    //     let key = document.getElementById('attr-input-key').value;
+    //     let value = document.getElementById('attr-input-value').value;
+    //     if (key && value)
+    //         g_op_feature.setAttribute(key, value);
+    // }
+
+    render() {
+        return (<React.Fragment>
+            {/* <div id="menu" className={styles.menuDiv}>
+                <div>
+                    点标
+        <button type="button" onClick={this.activate.bind(this, 'MARKER')}>点</button>
+                </div>
+                <div>
+                    线标
+        <button type="button" onClick={this.activate.bind(this, 'ARC')}>弧线</button>
+                    <button type="button" onClick={this.activate.bind(this, 'CURVE')}>曲线</button>
+                    <button type="button" onClick={this.activate.bind(this, 'POLYLINE')}>折线</button>
+                    <button type="button" onClick={this.activate.bind(this, 'FREEHAND_LINE')}>自由线</button>
+                </div>
+                <div>
+                    面标
+        <button type="button" onClick={this.activate.bind(this, 'CIRCLE')}>圆</button>
+                    <button type="button" onClick={this.activate.bind(this, 'ELLIPSE')}>椭圆</button>
+                    <button type="button" onClick={this.activate.bind(this, 'LUNE')}>弓形</button>
+                    <button type="button" onClick={this.activate.bind(this, 'SECTOR')}>扇形</button>
+                    <button type="button" onClick={this.activate.bind(this, 'CLOSED_CURVE')}>曲线面</button>
+                    <button type="button" onClick={this.activate.bind(this, 'POLYGON')}>多边形</button>
+                    <button type="button" onClick={this.activate.bind(this, 'RECTANGLE')}>矩形</button>
+                    <button type="button" onClick={this.activate.bind(this, 'FREEHAND_POLYGON')}>自由面</button>
+                    <button type="button" onClick={this.activate.bind(this, 'GATHERING_PLACE')}>聚集地</button>
+                </div>
+                <div>
+                    箭头
+        <button type="button" onClick={this.activate.bind(this, 'DOUBLE_ARROW')}>钳击</button>
+                    <button type="button" onClick={this.activate.bind(this, 'STRAIGHT_ARROW')}>直箭头</button>
+                    <button type="button" onClick={this.activate.bind(this, 'FINE_ARROW')}>细直箭头</button>
+                    <button type="button" onClick={this.activate.bind(this, 'ASSAULT_DIRECTION')}>突击方向</button>
+                    <button type="button" onClick={this.activate.bind(this, 'ATTACK_ARROW')}>进攻方向</button>
+                    <button type="button" onClick={this.activate.bind(this, 'TAILED_ATTACK_ARROW')}>进攻方向（尾）</button>
+                    <button type="button" onClick={this.activate.bind(this, 'SQUAD_COMBAT')}>分队战斗行动</button>
+                    <button type="button" onClick={this.activate.bind(this, 'TAILED_SQUAD_COMBAT')}>分队战斗行动（尾）</button>
+                </div>
+                <div>
+                    操作
+        <button type="button" onClick={this.plotOperator.bind(this, 'moveUp')}>上移</button>
+                    <button type="button" onClick={this.plotOperator.bind(this, 'moveDown')}>下移</button>
+                    <button type="button" onClick={this.plotOperator.bind(this, 'setToTop')}>置顶</button>
+                    <button type="button" onClick={this.plotOperator.bind(this, 'setToBottom')}>置底</button>
+                    <button type="button" onClick={this.plotOperator.bind(this, 'clearFeatures', true)}>全部清除</button>
+                    <button type="button" onClick={this.setPlotActive.bind(this, false)}>屏蔽点击</button>
+                    <button type="button" onClick={this.setPlotActive.bind(this, true)}>激活点击</button>
+
+                </div>
+                <div>
+                    添加属性
+        <input placeholder="输入key" id="attr-input-key"></input>
+                    <input placeholder="输入value" id="attr-input-value"></input>
+                    <button type="button" onClick={this.addAttribute.bind(this)}>添加属性</button>
+
+                </div>
+                <div>
+                    样式
+		<input id="style-input"></input>
+                    <button type="button" onClick={this.setStyle.bind(this)}>设置样式</button>
+                    <div id='property-show'>
+
+                    </div>
+                </div>
+                <div>
+                    <button type="button" onClick={this.callBackDraw.bind(this)}>曾经标绘</button>
+                </div>
+            </div>
+
+            <div id="delete-wrapper">
+                <div id="btn-delete" className={styles.btnDelete} style={{ display: 'none' }} onClick={this.DelBtnClick.bind(this)}>删 除</div>
+            </div> */}
+            <div id="map" className={styles.mapStyle}> </div>
+        </React.Fragment >)
+    }
+}
+export default MapOpenlayers;

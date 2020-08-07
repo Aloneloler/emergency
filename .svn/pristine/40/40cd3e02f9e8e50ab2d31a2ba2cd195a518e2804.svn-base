@@ -1,0 +1,76 @@
+.LeftMenuDiv {
+  position: absolute;
+  top: 0px;
+  z-index: 99;
+  left: 0px;
+  height: calc(100% - 0px);
+  width: 74px;
+  color: #fff;
+}
+
+.LeftMenuDivMain {
+  width: 100%;
+  background: #1E1E2D;
+  height: 100%;
+}
+
+.LeftMenuDivMainUl {
+  margin: 0px;
+  list-style: none;
+  padding: 0px;
+  text-align: center;
+}
+
+.LeftMenuDivMainUl .LeftMenuDivMainUlLi {
+  width: 74px;
+  height: 74px;
+  // margin: 0px 6px 6px 6px;
+  // background: url(../../../../assets/leftmenu/libg.png) no-repeat center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.LeftMenuDivMainUl .LeftMenuDivMainUlLiAction {
+  width: 74px;
+  height: 74px;
+  // margin: 0px 6px 6px 6px;
+  cursor: pointer;
+  // background: url(../../../../assets/leftmenu/libgAction.png) no-repeat center;
+  overflow: hidden;
+}
+
+.LeftMenuDivMainUl .LeftMenuDivMainUlLi img {
+  width: 27px;
+  height: 27px;
+}
+
+.LeftMenuDivMainUl .LeftMenuDivMainUlLiAction img {
+  width: 27px;
+  height: 27px;
+}
+
+.LeftMenuDivMainUl .LeftMenuDivMainUlLi .imgDiv {
+  padding: 18px 26px 0px 26px;
+}
+
+.LeftMenuDivMainUl .LeftMenuDivMainUlLiAction .imgDiv {
+  padding: 18px 26px 0px 26px;
+}
+
+.LeftMenuDivMainUl .LeftMenuDivMainUlLi .liMainDiv {
+  margin: 10px 0px;
+  font-size:12px;
+  font-family:Microsoft YaHei;
+  font-weight:bold;
+  color:rgba(154,161,183,1);
+  line-height:22px;
+}
+
+.LeftMenuDivMainUl .LeftMenuDivMainUlLiAction .liMainDiv {
+  margin: 10px 0px;
+  font-size:12px;
+  font-family:Microsoft YaHei;
+  font-weight:bold;
+  color:rgba(154,161,183,1);
+  line-height:22px;
+}

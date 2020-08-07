@@ -1,0 +1,55 @@
+import React from 'react';
+import styles from './styles.less';
+import router from 'umi/router'
+
+
+import { Input, Button } from 'antd';
+
+import Tables from './Component/table/index';
+
+class TaskManagement extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
+    //渲染前调用
+    componentWillMount() {
+
+    }
+
+
+    //渲染后调用
+    componentDidMount() {
+
+    }
+
+
+    render() {
+        
+
+       
+        return (<React.Fragment>
+            <div className={styles.allBox}>
+                <div className={styles.inputBox}>
+                    <div>
+                        任务名称: <Input placeholder="请输入" />
+                    </div>
+                    <div>
+                        任务类型: <Input placeholder="请输入" />
+                    </div>
+                    <div>
+                    <Button className={styles.seachBtn} type="primary">查询</Button>
+                    <Button type="primary" ghost>创建任务</Button>
+                    </div>
+                </div>
+                <Tables/>
+                
+            </div>
+            
+
+        </React.Fragment>)
+    }
+}
+export default TaskManagement;

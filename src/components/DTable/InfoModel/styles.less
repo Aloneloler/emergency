@@ -1,0 +1,161 @@
+.noraml {
+  position: relative;
+  top: 87px;
+  left: 111px;
+  width: calc(100% - 120px);
+  height: 100%;
+
+  :global {
+    .ant-table-thead > tr > th {
+      background: rgb(8, 58, 143);
+      color: #fff;
+      border-bottom: 2px solid transparent;
+    }
+    .ant-table-placeholder {
+      background: #041d41 !important;
+      border: none !important;
+    }
+    .ant-empty-description {
+      color: #fff;
+    }
+    .ant-table-tbody > tr > td {
+      border-bottom: 2px solid transparent;
+      color: #fff;
+      background: transparent;
+    }
+
+    .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+      background: rgba(8, 58, 143, 0.3) !important;
+    }
+    .ant-pagination-prev .ant-pagination-item-link,
+    .ant-pagination-next .ant-pagination-item-link {
+      background: #666;
+      border: none;
+    }
+
+    .ant-pagination-item-active a {
+      background: rgb(43, 122, 216);
+      color: #fff;
+      border: none;
+    }
+
+    .ant-btn-default {
+      background: transparent;
+      color: #fff;
+    }
+
+    .ant-modal-header {
+      background: #fff !important;
+      border-bottom: none;
+    }
+  }
+  header {
+    height: 120px;
+    width: calc(100%);
+    background: rgba(4, 29, 65, 1);
+    overflow: hidden;
+    // padding: 18px 36px;
+    padding: 42px 36px;
+    margin-bottom: 12px;
+  }
+
+  .light_row {
+    background: rgb(6, 30, 74);
+  }
+  .dark_row {
+    background: rgb(4, 18, 51);
+  }
+
+  .typeItem {
+    display: flex;
+    > div {
+      font-size: 16px;
+      color: #fff;
+    }
+  }
+  .buttonGroup {
+    > button {
+      margin: 0 20px;
+    }
+  }
+}
+
+.content {
+  padding: 20px;
+  :global {
+    .ant-modal-header {
+      background: rgb(11, 61, 127) !important;
+      border-bottom: none;
+      color: #fff !important;
+    }
+    .ant-modal-title {
+      color: #fff !important;
+    }
+    .ant-modal-content {
+      background-color: transparent;
+      border: 4px solid rgb(8, 67, 159);
+      box-shadow: rgb(8, 67, 159);
+      border-radius: 0;
+    }
+  }
+  color: #fff !important;
+  p {
+    color: #fff;
+  }
+
+  .warpContent {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    // .baseInfo {
+    //   width: 500px;
+    //   border-right: 1px dashed #ccc;
+    // }
+    // >div{}
+    .chuzhiInfo {
+      padding-left: 20px;
+      width: calc(100% - 500px);
+    }
+  }
+
+  .itemInfo {
+    margin: 0px 20px 20px 0;
+    display: flex;
+    font-size: 16px;
+    justify-content: space-between;
+    >div{
+        flex: 1;
+    }
+    .itemName {
+      font-size: 16px;
+      color: #1890ff;
+    }
+  }
+}
+
+.hongseType {
+  width: 18px;
+  text-align: center;
+  height: 18px;
+  background: red;
+  border-radius: 50%;
+  display: block;
+}
+
+.huangseType {
+  width: 18px;
+  text-align: center;
+  height: 18px;
+  background: yellow;
+  border-radius: 50%;
+  display: block;
+}
+
+.lvseType {
+  width: 18px;
+  text-align: center;
+  height: 18px;
+  background: green;
+  border-radius: 50%;
+  display: block;
+}

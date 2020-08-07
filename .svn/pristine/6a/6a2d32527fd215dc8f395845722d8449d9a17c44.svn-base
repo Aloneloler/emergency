@@ -1,0 +1,20 @@
+//配置路由
+import { homePageRoutes } from './routes/HomePage';
+import { User } from './routes/User';
+export default [
+  {
+    path: '/Login',
+    component: '../layouts/User/index',
+    routes: [
+      // { path: '/user', redirect: '/user/login' },
+      // { path: '/user/sign', name: '注册', component: './Admin/Users/sign' },
+      { path: '/Login', name: '登录', component: './Login/index' },
+    ],
+  },
+  {
+    path: '/',
+    component: '../layouts/Home/index',
+    routes: [{ path: '/', redirect: './GisDispatching' }, ...homePageRoutes,],
+  },
+
+];

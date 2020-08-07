@@ -1,0 +1,781 @@
+import React from 'react';
+import styles from './styles.less';
+import router from 'umi/router'
+import axios from 'axios'
+import shareOff from '@/assets/DocumentSharing/shareOff.png';
+import my from '@/assets/DocumentSharing/my.png';
+import sharedSpace from '@/assets/DocumentSharing/sharedSpace.png';
+import search1 from '@/assets/DocumentSharing/search1.png';
+import collection from '@/assets/DocumentSharing/collection.png';
+import collectionLight from '@/assets/DocumentSharing/collectionLight.png';
+import myDark from '@/assets/DocumentSharing/myDark.png';
+import sharedSpaceLight from '@/assets/DocumentSharing/sharedSpaceLight.png';
+import deleteOff from '@/assets/DocumentSharing/deleteOff.png';
+import collectionOff from '@/assets/DocumentSharing/collectionOff.png';
+import file from '@/assets/DocumentSharing/file.png';
+import docx from '@/assets/DocumentSharing/docx.png';
+import xlsx from '@/assets/DocumentSharing/xlsx.png';
+import pdf from '@/assets/DocumentSharing/pdf.png';
+import x from '@/assets/DocumentSharing/x.png';
+//react文件预览支持docx，xlsx
+import FileViewer from 'react-file-viewer';
+//react预览pdf文件插件
+import PDF from 'react-pdf-js';
+
+import { Tag, Button, Table, message, Modal, Upload, Menu, Input } from 'antd';
+import { CaretDownOutlined, InboxOutlined } from '@ant-design/icons';
+const { SubMenu } = Menu;
+const { Dragger } = Upload;
+
+class Content extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            my: my,
+            collection: collection,
+            sharedSpace: sharedSpace,
+            fileState: 'none',
+            fileType: '',
+            uploadState: false,
+            showBtn: false,
+            page: 1,
+            fileUrl: '',
+            pages: null,
+            columns: [
+                {
+                    title: '所有类型',
+                    dataIndex: 'name',
+                    filters: [
+                        {
+                            text: 'docx',
+                            value: 'docx',
+                        },
+                        {
+                            text: 'xlsx',
+                            value: 'xlsx',
+                        },
+                        {
+                            text: 'pdf',
+                            value: 'pdf',
+                        },
+
+                    ],
+                    filterIcon: filtered => <CaretDownOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+                    onFilter: (value, record) => record.name.key == value,
+                    sortDirections: ['descend'],
+                },
+                {
+                    title: '路径',
+                    dataIndex: 'route',
+                    sorter: (a, b) => a.route.length - b.route.length,
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '创建时间',
+                    dataIndex: 'startTime',
+                    sorter: (a, b) => Date.parse(a.startTime) - Date.parse(b.startTime),
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '修改时间',
+                    dataIndex: 'modifyTime',
+                    sorter: (a, b) => Date.parse(a.modifyTime) - Date.parse(b.modifyTime),
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '操作',
+                    dataIndex: 'operation',
+                },
+            ],
+            data: [],
+        }
+    }
+    //渲染前调用
+    componentWillMount() {
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            columns: nextProps.columns,
+            data: nextProps.data,
+
+        })
+    }
+
+    //渲染后调用
+    componentDidMount() {
+        this.queryPrivate();
+    }
+
+    //查询我的空间
+    queryPrivate() {
+        const baseUrl = 'http://192.168.0.123:8889';
+        const api = '/zhyjxxzhpt/file/queryPrivate';
+        let userid = Number(localStorage.getItem('userid'));
+        axios({
+            url: baseUrl + api,
+            method: "post",
+            params: {
+                userid: userid,
+            },
+            headers: {
+                "Content-Type": "multipart/form-data;boundary=" + new Date().getTime()
+            }
+        }).then(res => {
+            console.log('res', res);
+            let datas = res.data.data;
+            let datalist = [];
+            let lists = {};
+            let type = file;
+            datas.map((item, index) => {
+                if (item.suffix == 'xlsx') {
+                    type = xlsx;
+                }
+                if (item.suffix == 'docx') {
+                    type = docx;
+                }
+                if (item.suffix == 'pdf') {
+                    type = pdf;
+                }
+                console.log('type', type);
+                lists = {
+                    key: item.id,
+                    name: <div key={item.suffix}><img style={{ marginRight: '5px' }} src={type} alt="" /><a onClick={this.OnFile.bind(this, item)}>{item.name}</a></div>,
+                    route: <span>{item.url}</span>,
+                    startTime: <span>{item.gmt_create}</span>,
+                    modifyTime: <span>{item.gmt_modified}</span>,
+                    operation: <div className={styles.operation}>
+                        <img onClick={this.shareInfo.bind(this, item.id)} src={shareOff} />
+                        <img onClick={this.deleteInfo.bind(this, item.id, '我的')} className={styles.operationDelete} src={deleteOff} />
+                        <img onClick={this.collectionInfo.bind(this, item.id)} src={collectionOff} />
+                    </div>
+                }
+                datalist.push(lists);
+            })
+            this.setState({
+                data: datalist
+            })
+        })
+    }
+
+    //查询共享空间
+    queryShare() {
+        const baseUrl = 'http://192.168.0.123:8889';
+        const api = '/zhyjxxzhpt/file/queryShare';
+        axios({
+            url: baseUrl + api,
+            method: "get",
+            headers: {
+                "Content-Type": "multipart/form-data;boundary=" + new Date().getTime()
+            }
+        }).then(res => {
+            console.log('res', res);
+            let datas = res.data.data;
+            let datalist = [];
+            let lists = {};
+            let type = docx;
+            datas.map((item, index) => {
+                if (item.suffix == 'xlsx') {
+                    type = xlsx;
+                }
+                if (item.suffix == 'docx') {
+                    type = docx;
+                }
+                if (item.suffix == 'pdf') {
+                    type = pdf;
+                }
+                console.log('type', type);
+                lists = {
+                    key: item.id,
+                    name: <div key={item.suffix}><img style={{ marginRight: '5px' }} src={type} alt="" /><a onClick={this.OnFile.bind(this, item)}>{item.name}</a></div>,
+                    route: <span>{item.url}</span>,
+                    startTime: <span>{item.gmt_create}</span>,
+                    modifyTime: <span>{item.gmt_modified}</span>,
+                    sharMan: <span>{item.user_name}</span>,
+                    operation: <div className={styles.operation}>
+                        <img onClick={this.deleteInfo.bind(this, item.id, '共享')} className={styles.operationDelete} src={deleteOff} />
+                        <img src={collectionOff} />
+                    </div>
+                }
+                datalist.push(lists);
+            })
+            this.setState({
+                data: datalist
+            })
+        })
+    }
+
+    //查询收藏空间
+    queryFavorites() {
+        const baseUrl = 'http://192.168.0.123:8889';
+        const api = '/zhyjxxzhpt/file/queryFavorites';
+        let userid = Number(localStorage.getItem('userid'));
+        axios({
+            url: baseUrl + api,
+            method: "post",
+            params: {
+                userid: userid,
+            },
+            headers: {
+                "Content-Type": "multipart/form-data;boundary=" + new Date().getTime()
+            }
+        }).then(res => {
+            console.log('res', res);
+            let datas = res.data.data;
+            let datalist = [];
+            let lists = {};
+            let type = docx;
+            datas.map((item, index) => {
+                if (item.suffix == 'xlsx') {
+                    type = xlsx;
+                }
+                if (item.suffix == 'docx') {
+                    type = docx;
+                }
+                if (item.suffix == 'pdf') {
+                    type = pdf;
+                }
+                console.log('type', type);
+                lists = {
+                    key: item.id,
+                    name: <div key={item.suffix}><img style={{ marginRight: '5px' }} src={type} alt="" /><a onClick={this.OnFile.bind(this, item)}>{item.name}</a></div>,
+                    route: <span>{item.url}</span>,
+                    startTime: <span>{item.gmt_create}</span>,
+                    modifyTime: <span>{item.gmt_modified}</span>,
+                    operation: <div className={styles.operation}>
+                        <img src={shareOff} />
+                        <img onClick={this.deleteInfo.bind(this, item.id, '收藏')} className={styles.operationDelete} src={deleteOff} />
+                    </div>
+                }
+                datalist.push(lists);
+            })
+            this.setState({
+                data: datalist
+            })
+        })
+    }
+    //删除文件
+    deleteInfo(id, info) {
+        console.log(id);
+        const baseUrl = 'http://192.168.0.123:8889';
+        const api = '/zhyjxxzhpt/file/delFile';
+        axios({
+            url: baseUrl + api,
+            method: "post",
+            params: {
+                id: id,
+            },
+            headers: {
+                "Content-Type": "multipart/form-data;boundary=" + new Date().getTime()
+            }
+        }).then(res => {
+            console.log(res);
+            if (res.data.code == 'success') {
+                message.success('文件删除成功！');
+                if (info == '我的') {
+                    this.queryPrivate();
+                }
+                if (info == '共享') {
+                    this.queryShare();
+                }
+                if (info == '收藏') {
+                    this.queryFavorites();
+                }
+            }
+        })
+    }
+    //文件共享
+    shareInfo(id) {
+        console.log(id);
+        const baseUrl = 'http://192.168.0.123:8889';
+        const api = '/zhyjxxzhpt/file/shareFile';
+        axios({
+            url: baseUrl + api,
+            method: "post",
+            params: {
+                id: id,
+            },
+            headers: {
+                "Content-Type": "multipart/form-data;boundary=" + new Date().getTime()
+            }
+        }).then(res => {
+            console.log(res);
+            if (res.data.code == 'success') {
+                message.success('文件共享成功！');
+            }
+        })
+    }
+    //文件收藏
+    collectionInfo(id) {
+        console.log(id);
+        const baseUrl = 'http://192.168.0.123:8889';
+        const api = '/zhyjxxzhpt/file/favoritesFile';
+        let userid = Number(localStorage.getItem('userid'));
+        axios({
+            url: baseUrl + api,
+            method: "post",
+            params: {
+                id: id,
+                userid: userid,
+            },
+            headers: {
+                "Content-Type": "multipart/form-data;boundary=" + new Date().getTime()
+            }
+        }).then(res => {
+            console.log(res);
+            if (res.data.code == 'success') {
+                message.success('文件收藏成功！');
+            }
+        })
+    }
+    //选择目录
+    handleClick = e => {
+        let eKey = e.key;
+        let columns = [];
+        if (eKey == '1') {
+            this.setState({
+                my: my,
+                collection: collection,
+                sharedSpace: sharedSpace,
+                showBtn: false
+            });
+            columns = [
+                {
+                    title: '所有类型',
+                    dataIndex: 'name',
+                    filters: [
+                        {
+                            text: 'docx',
+                            value: 'docx',
+                        },
+                        {
+                            text: 'xlsx',
+                            value: 'xlsx',
+                        },
+                        {
+                            text: 'pdf',
+                            value: 'pdf',
+                        },
+
+                    ],
+                    filterIcon: filtered => <CaretDownOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+                    onFilter: (value, record) => record.name.key == value,
+                    sortDirections: ['descend'],
+                },
+                {
+                    title: '路径',
+                    dataIndex: 'route',
+                    sorter: (a, b) => a.route.length - b.route.length,
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '创建时间',
+                    dataIndex: 'startTime',
+                    sorter: (a, b) => Date.parse(a.startTime) - Date.parse(b.startTime),
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '修改时间',
+                    dataIndex: 'modifyTime',
+                    sorter: (a, b) => Date.parse(a.modifyTime) - Date.parse(b.modifyTime),
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '操作',
+                    dataIndex: 'operation',
+                },
+            ];
+            this.queryPrivate();
+            this.setState({
+                columns: columns,
+            })
+        };
+        if (eKey == '2') {
+            this.setState({
+                my: myDark,
+                collection: collection,
+                sharedSpace: sharedSpaceLight,
+                showBtn: true
+            });
+            columns = [{
+                title: '所有类型',
+                dataIndex: 'name',
+                filters: [
+                    {
+                        text: 'docx',
+                        value: 'docx',
+                    },
+                    {
+                        text: 'xlsx',
+                        value: 'xlsx',
+                    },
+                    {
+                        text: 'pdf',
+                        value: 'pdf',
+                    },
+
+                ],
+                filterIcon: filtered => <CaretDownOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+                onFilter: (value, record) => record.name.key == value,
+                sortDirections: ['descend'],
+            },
+            {
+                title: '路径',
+                dataIndex: 'route',
+                sorter: (a, b) => a.route.length - b.route.length,
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: '创建时间',
+                dataIndex: 'startTime',
+                sorter: (a, b) => Date.parse(a.startTime) - Date.parse(b.startTime),
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: '修改时间',
+                dataIndex: 'modifyTime',
+                sorter: (a, b) => Date.parse(a.modifyTime) - Date.parse(b.modifyTime),
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: '分享时间',
+                dataIndex: 'sharTime',
+                sorter: (a, b) => Date.parse(a.sharTime) - Date.parse(b.sharTime),
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: '分享者',
+                dataIndex: 'sharMan',
+                sorter: (a, b) => a.sharMan - b.sharMan,
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: '操作',
+                dataIndex: 'operation',
+            },
+            ];
+
+            this.queryShare();
+            this.setState({
+                columns: columns,
+            })
+        };
+        if (eKey == '3') {
+            this.setState({
+                my: myDark,
+                collection: collectionLight,
+                sharedSpace: sharedSpace,
+                showBtn: true
+            });
+            columns = [
+                {
+                    title: '所有类型',
+                    dataIndex: 'name',
+                    filters: [
+                        {
+                            text: 'docx',
+                            value: 'docx',
+                        },
+                        {
+                            text: 'xlsx',
+                            value: 'xlsx',
+                        },
+                        {
+                            text: 'pdf',
+                            value: 'pdf',
+                        },
+
+                    ],
+                    filterIcon: filtered => <CaretDownOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+                    onFilter: (value, record) => record.name.key == value,
+                    sortDirections: ['descend'],
+                },
+                {
+                    title: '所有者',
+                    dataIndex: 'author',
+                    sorter: (a, b) => a.author - b.author,
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '路径',
+                    dataIndex: 'route',
+                    sorter: (a, b) => a.route.length - b.route.length,
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '创建时间',
+                    dataIndex: 'startTime',
+                    sorter: (a, b) => Date.parse(a.startTime) - Date.parse(b.startTime),
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '修改时间',
+                    dataIndex: 'modifyTime',
+                    sorter: (a, b) => Date.parse(a.modifyTime) - Date.parse(b.modifyTime),
+                    sortDirections: ['descend', 'ascend'],
+                },
+
+                {
+                    title: '操作',
+                    dataIndex: 'operation',
+                },
+            ];
+            this.queryFavorites();
+            this.setState({
+                columns: columns,
+            })
+        }
+    };
+
+    onUpload() {
+        this.setState({
+            uploadState: true,
+        })
+    }
+
+    //文件上传
+    handleChange(info) {
+        console.log('info', info);
+        var fileSize = info.file.size;
+        if (info.file.status === 'done') {
+            let response = info.file.response.res[0];
+            if (response.suffix == 'xlsx' || response.suffix == 'docx' || response.suffix == 'pdf') {
+                let userid = Number(localStorage.getItem('userid'));
+                const baseUrl = 'http://192.168.0.123:8889';
+                const api = '/zhyjxxzhpt/file/upload';
+                let fd = new FormData();
+                fd.append("userid", userid);
+                fd.append("id", response.id);
+                fd.append("name", response.name);
+                fd.append("suffix", response.suffix);
+                fd.append("type", response.type);
+                axios({
+                    url: baseUrl + api,
+                    method: "post",
+                    data: fd,
+                    headers: {
+                        "Content-Type": "multipart/form-data;boundary=" + new Date().getTime()
+                    }
+                }).then(res => {
+                    console.log(res);
+                    if (res.data.code == 'success') {
+                        message.success(`${response.name} 文件上传成功！`);
+                    }
+
+                    this.queryPrivate();
+
+                })
+            } else {
+                message.error(`只能上传xlsx,docx,pdf文件！`);
+                return false
+            }
+
+        } else if (info.file.status === 'error') {
+            if (fileSize > 1048576) {
+                message.error(`${info.file.name}文件大于1M!`);
+            } else {
+                message.error(`${info.file.name} 文件上传失败！`);
+            }
+
+        }
+    }
+
+    onChange(pagination, filters, sorter, extra) {
+        // console.log('params', pagination, filters, sorter, extra);
+    }
+
+    handleOk = e => {
+        console.log(e);
+        this.setState({
+            uploadState: false,
+        });
+    };
+
+    handleCancel = e => {
+        console.log(e);
+        this.setState({
+            uploadState: false,
+        });
+    };
+
+    //预览文件
+    OnFile(fileType) {
+        console.log(fileType);
+
+        const baseUrl = 'http://192.168.0.102:7072/';
+        const api = 'folder/annex/data/';
+        let userid = Number(localStorage.getItem('userid'));
+        axios({
+            url: baseUrl + api + fileType.url,
+            method: "get",
+            headers: {
+                "Content-Type": "multipart/form-data;boundary=" + new Date().getTime()
+            }
+        }).then(res => {
+            console.log(res);
+            if (res.status == 200) {
+                this.setState((state) => ({
+                    fileUrl: res.config.url,
+                    fileState: 'block',
+                    fileType: fileType.suffix,
+                }));
+            }
+            console.log(this.state.fileUrl);
+            console.log(this.state.fileType)
+        })
+    }
+
+    //关闭预览
+    closeFile() {
+        this.setState({
+            fileState: 'none',
+        })
+    }
+    //pdf页数
+    onDocumentComplete = (pages) => {
+        this.setState({ page: 1, pages })
+    }
+    //pdf预览上一页
+    handlePrevious = () => {
+        this.setState({ page: this.state.page - 1 })
+    }
+    //pdf预览下一页
+    handleNext = () => {
+        this.setState({ page: this.state.page + 1 })
+    }
+    onError(e) {
+        console.log(e, '错误')
+    }
+
+    render() {
+        const upLoad = {
+            name: 'files',
+            action: 'http://192.168.0.102:7072/folder/annex/upload',
+            headers: {
+                authorization: 'authorization-text',
+            },
+            onChange: this.handleChange.bind(this),
+            showUploadList: false,
+        }
+        const { page, pages, fileType } = this.state;
+
+        return (<React.Fragment>
+
+            <div className={styles.rightBox}>
+                <div className={styles.menuBox}>
+                    <div className={styles.search}>
+                        <Input className={styles.inputSearch} placeholder="搜索" prefix={<img src={search1}></img>} />
+                    </div>
+                    <div className={styles.tab}>
+
+                        <Menu
+                            onClick={this.handleClick.bind(this)}
+                            style={{ width: 274 }}
+                            defaultSelectedKeys={['1']}
+                            defaultOpenKeys={['sub1']}
+                            mode="inline"
+                        >
+                            <Menu.Item key="1">
+                                <span className={styles.departmentBox}>
+                                    <img src={this.state.my}></img>
+                                    <span>我的空间</span>
+                                </span>
+                            </Menu.Item>
+                            <Menu.Item key="2">
+                                <span className={styles.departmentBox}>
+                                    <img src={this.state.sharedSpace}></img>
+                                    <span>共享空间</span>
+                                </span>
+                            </Menu.Item>
+                            <Menu.Item key="3" >
+                                <span className={styles.departmentBox}>
+                                    <img src={this.state.collection}></img>
+                                    <span>收藏</span>
+                                </span>
+                            </Menu.Item>
+                        </Menu>
+                    </div>
+                </div>
+                <div className={styles.ContentBlock}>
+                    <div className={styles.tableBox}>
+                        <div className={styles.tableBtnBox}>
+                            <Button disabled={this.state.showBtn} type="primary">新建</Button>
+                            <Button disabled={this.state.showBtn} onClick={this.onUpload.bind(this)} className={styles.uploadBtn} type="primary" ghost>上传</Button>
+                        </div>
+                        <Table columns={this.state.columns} pagination="false" dataSource={this.state.data} onChange={this.onChange()} />
+                        <Modal
+                            title="文件上传"
+                            visible={this.state.uploadState}
+                            onOk={this.handleOk.bind(this)}
+                            onCancel={this.handleCancel.bind(this)}
+                        >
+                            <Dragger {...upLoad}>
+                                <p className="ant-upload-drag-icon">
+                                    <InboxOutlined />
+                                </p>
+                                <p className="ant-upload-text">单击或拖动文件到此区域以上传</p>
+                            </Dragger>,
+                </Modal>
+                    </div>
+                </div>
+                <div style={{ display: this.state.fileState }} className={styles.filesBox}>
+                    <div className={styles.fileTop}>
+                        <span>预览</span>
+                        <img className={styles.x} src={x} onClick={this.closeFile.bind(this)} alt="" />
+                    </div>
+                    {
+                        fileType == 'docx' ?
+                            <div className={styles.flieContent}>
+                                <FileViewer
+                                    fileType={fileType}//文件类型
+                                    filePath={this.state.fileUrl} //文件地址
+                                />
+                            </div>
+                            : fileType == 'xlsx' ?
+                                <div className={styles.flieContent}>
+                                    <FileViewer
+                                        fileType={fileType}//文件类型
+                                        filePath={this.state.fileUrl}//文件地址
+                                    />
+                                </div>
+                                : fileType == 'pdf' ?
+                                    <div>
+                                        <div className={styles.filePdf}>
+                                            <PDF
+                                                file={this.state.fileUrl}
+                                                onDocumentComplete={this.onDocumentComplete}
+                                                page={page}
+                                            />
+                                        </div>
+
+                                        <div className={styles.filePdfFooter}>
+
+                                            {page === 1 ?
+                                                null
+                                                :
+                                                <Button type='primary' onClick={this.handlePrevious}>上一页</Button>
+                                            }
+
+                                            <div className={styles.filePdfPage}>
+
+                                                <span>第{page}页</span>/<span>共{pages}页</span>
+
+                                            </div>
+                                            {page === pages ?
+                                                null
+                                                :
+                                                <Button style={{ marginLeft: '10px' }} type='primary' onClick={this.handleNext}>下一页</Button>
+                                            }
+                                        </div>
+                                    </div>
+                                    : ''
+
+                    }
+
+                </div>
+            </div>
+        </React.Fragment>)
+    }
+}
+export default Content;

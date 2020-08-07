@@ -1,0 +1,302 @@
+import React from 'react';
+import styles from './styles.less';
+import router from 'umi/router'
+
+
+import { Input, Button, Modal, Select, DatePicker, Tag } from 'antd';
+
+import Tables from './Component/table/index';
+
+let { Option } = Select;
+const { TextArea } = Input;
+
+class TaskManagement extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            visible: false,
+            accept: false,
+            taskName: '',
+            selectType: '救援任务',
+            startTime: '',
+            overTime: '',
+            columns: [
+                {
+                    title: '任务名称',
+                    dataIndex: 'name',
+                },
+                {
+                    title: '任务类型',
+                    dataIndex: 'type',
+                },
+                {
+                    title: '任务开始时间',
+                    dataIndex: 'startTime',
+                },
+                {
+                    title: '任务结束时间',
+                    dataIndex: 'overTime',
+                },
+                {
+                    title: '实际开始时间',
+                    dataIndex: 'realStartTime',
+                },
+                {
+                    title: '实际结束时间',
+                    dataIndex: 'realOverTime',
+                },
+                {
+                    title: '任务进度',
+                    dataIndex: 'progress',
+                },
+                {
+                    title: '任务描述',
+                    dataIndex: 'describe',
+                },
+                {
+                    title: '执行方案',
+                    dataIndex: 'programme',
+                },
+                {
+                    title: '状态',
+                    dataIndex: 'state',
+                },
+                {
+                    title: '操作',
+                    dataIndex: 'operation',
+                },
+            ],
+            data: [
+                {
+                    key: '1',
+                    name: '[20191029]化工厂救援任务',
+                    type: '救援任务',
+                    startTime: '2019-10-29',
+                    overTime: '2019-11-29',
+                    realStartTime: '2019-11-03',
+                    realOverTime: '2019-11-27',
+                    progress: '0%',
+                    describe: '',
+                    programme: '',
+                    state: <Tag color="geekblue">待接收</Tag>,
+                    operation: <Button onClick={this.accept.bind(this, 0)} type="primary">接受</Button>
+                },
+                {
+                    key: '2',
+                    name: '[20190501]治安巡逻保障任务',
+                    type: '保障任务',
+                    startTime: '2019-05-01',
+                    overTime: '2019-05-03',
+                    realStartTime: '2019-05-01',
+                    realOverTime: '2019-05-03',
+                    progress: '3%',
+                    describe: '',
+                    programme: '',
+                    state: <Tag color="blue">待执行</Tag>,
+                    operation: ''
+                },
+                {
+                    key: '3',
+                    name: '[20190202]医疗保障救援任务',
+                    type: '保障任务',
+                    startTime: '2019-02-02',
+                    overTime: '2019-02-04',
+                    realStartTime: '2019-02-03',
+                    realOverTime: '2019-02-05',
+                    progress: '56%',
+                    describe: '',
+                    programme: '',
+                    state: <Tag color="orange">暂停</Tag>,
+                    operation: ''
+                },
+                {
+                    key: '4',
+                    name: '[20190105]交通保障任务',
+                    type: '保障任务',
+                    startTime: '2019-01-05',
+                    overTime: '2019-01-06',
+                    realStartTime: '2019-01-06',
+                    realOverTime: '2019-01-06',
+                    progress: '20%',
+                    describe: '',
+                    programme: '',
+                    state: <Tag color="red">终止</Tag>,
+                    operation: ''
+                },
+                {
+                    key: '5',
+                    name: '[20190103]高层火灾救援任务',
+                    type: '救援任务',
+                    startTime: '2019-01-03',
+                    overTime: '2019-01-04',
+                    realStartTime: '2019-01-03',
+                    realOverTime: '2019-01-03',
+                    progress: '100%',
+                    describe: '',
+                    programme: '',
+                    state: <Tag color="green">完成</Tag>,
+                    operation: ''
+                },
+            ],
+        }
+    }
+    //渲染前调用
+    componentWillMount() {
+
+    }
+
+
+    //渲染后调用
+    componentDidMount() {
+
+    }
+
+    accept(index) {
+        let data = this.state.data;
+        data[index] = {
+            key: '1',
+            name: '[20191029]化工厂救援任务',
+            type: '救援任务',
+            startTime: '2019-10-29',
+            overTime: '2019-11-29',
+            realStartTime: '2019-11-03',
+            realOverTime: '2019-11-27',
+            progress: '0%',
+            describe: '',
+            programme: '',
+            state: <Tag color="blue">待执行</Tag>,
+            operation: ''
+        }
+        this.setState({
+            data: data
+        })
+    }
+
+    addTask() {
+        this.setState({
+            visible: true,
+        });
+    }
+
+    handleOk = e => {
+        // console.log(e);
+        let newTask = {
+            key: '0',
+            name: this.state.taskName,
+            type: this.state.selectType,
+            startTime: this.state.startTime,
+            overTime: this.state.overTime,
+            realStartTime: '',
+            realOverTime: '',
+            progress: '0%',
+            describe: '',
+            programme: '',
+            state: <Tag color="geekblue">待接收</Tag>,
+            operation: <Button type="primary">接受</Button>
+        }
+        this.setState({
+            data: [newTask, ...this.state.data],
+            visible: false,
+            taskName: '',
+            // selectType:'救援任务',
+            // startTime:'',
+            // overTime:'',
+        });
+    };
+
+    handleCancel = e => {
+        // console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
+
+    inputName(e) {
+        // console.log(e.target.value);
+        this.setState({
+            taskName: e.target.value,
+        })
+    }
+
+    selectType(value) {
+        // console.log(`selected ${value}`);
+        this.setState({
+            selectType: value,
+        })
+    }
+
+    startTime(date, dateString) {
+        // console.log(date, dateString);
+        this.setState({
+            startTime: dateString,
+        })
+    }
+
+    overTime(date, dateString) {
+        // console.log(date, dateString);
+        this.setState({
+            overTime: dateString,
+        })
+    }
+
+    render() {
+
+
+
+        return (<React.Fragment>
+            <div className={styles.allBox}>
+                <div className={styles.inputBox}>
+                    <div>
+                        任务名称: <Input placeholder="请输入" />
+                    </div>
+                    <div>
+                        任务类型: <Input placeholder="请输入" />
+                    </div>
+                    <div>
+                        <Button className={styles.seachBtn} type="primary">查询</Button>
+                        <Button onClick={this.addTask.bind(this)} type="primary" ghost>创建任务</Button>
+                    </div>
+                </div>
+                <Tables data={this.state.data} columns={this.state.columns} />
+                <Modal
+                    title="创建任务"
+                    visible={this.state.visible}
+                    onOk={this.handleOk.bind(this)}
+                    onCancel={this.handleCancel}
+                >
+                    <div className={styles.modalInput}>
+                        <span className={styles.modalTitle}>任务名称: </span><Input value={this.state.taskName} onChange={this.inputName.bind(this)} placeholder="请输入" />
+                    </div>
+                    <div className={styles.modalInput}>
+                        <span className={styles.modalTitle}>任务类型: </span>
+                        <Select defaultValue="救援任务" style={{ width: 120 }} onChange={this.selectType.bind(this)}>
+                            <Option value="救援任务">救援任务</Option>
+                            <Option value="保障任务">保障任务</Option>
+
+                        </Select>
+                    </div>
+                    <div className={styles.modalInput}>
+                        <span className={styles.modalTitle}>计划开始时间: </span>
+                        <DatePicker onChange={this.startTime.bind(this)} />
+                    </div>
+                    <div className={styles.modalInput}>
+                        <span className={styles.modalTitle}>计划结束时间: </span>
+                        <DatePicker onChange={this.overTime.bind(this)} />
+                    </div>
+                    <div className={styles.modalInput}>
+                        <span className={styles.modalTitle}>任务描述: </span>
+                        <TextArea rows={2} />
+                    </div>
+                    <div className={styles.modalInput}>
+                        <span className={styles.modalTitle}>执行方案: </span>
+                        <TextArea rows={2} />
+                    </div>
+
+                </Modal>
+            </div>
+
+
+        </React.Fragment>)
+    }
+}
+export default TaskManagement;

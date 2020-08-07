@@ -1,0 +1,209 @@
+import React from 'react';
+import styles from './styles.less';
+import router from 'umi/router'
+import shareOn from '@/assets/DocumentSharing/shareOn.png';
+import shareOff from '@/assets/DocumentSharing/shareOff.png';
+import deleteOn from '@/assets/DocumentSharing/deleteOn.png';
+import deleteOff from '@/assets/DocumentSharing/deleteOff.png';
+import collectionOn from '@/assets/DocumentSharing/collectionOn.png';
+import collectionOff from '@/assets/DocumentSharing/collectionOff.png';
+import file from '@/assets/DocumentSharing/file.png';
+import xiangmu from '@/assets/DocumentSharing/项目建议书.docx';
+import ceshi from '@/assets/DocumentSharing/测试统计数据.xlsx';
+import x from '@/assets/DocumentSharing/x.png';
+import FileViewer from 'react-file-viewer';
+
+import Menus from './Component/Menu/index';
+import Tables from './Component/Content/index';
+import Files from './Component/Files/index';
+
+import { Tag, Button, Table,message } from 'antd';
+import { CaretDownOutlined } from '@ant-design/icons';
+
+
+let taian = 'http://localhost:8889/static/taian.ffb3b2ac.pdf';
+  
+
+class DocumentSharing extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fileState:'none',
+            fileType:'',
+            columns:[
+                {
+                    title: '所有类型',
+                    dataIndex: 'name',
+                    filters: [
+                        {
+                            text: 'docx',
+                            value: 'docx',
+                        },
+                        {
+                            text: 'xlsx',
+                            value: 'xlsx',
+                        },
+                        {
+                            text: 'pdf',
+                            value: 'pdf',
+                        },
+            
+                    ],
+                    filterIcon: filtered => <CaretDownOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+                    onFilter: (value, record) => record.name.key == value,
+                    sortDirections: ['descend'],
+                },
+                {
+                    title: '路径',
+                    dataIndex: 'route',
+                    sorter: (a, b) => a.route.length - b.route.length,
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '创建时间',
+                    dataIndex: 'startTime',
+                    sorter: (a, b) => Date.parse(a.startTime) - Date.parse(b.startTime),
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '修改时间',
+                    dataIndex: 'modifyTime',
+                    sorter: (a, b) => Date.parse(a.modifyTime) - Date.parse(b.modifyTime),
+                    sortDirections: ['descend', 'ascend'],
+                },
+                {
+                    title: '操作',
+                    dataIndex: 'operation',
+                },
+            ],
+            data:[
+                {
+                    key: '1',
+                    name: <div key='docx'><img src={file} alt="" /> <a onClick={this.OnFile.bind(this,'docx')}> 任务周报</a></div>,
+                    route: '--',
+                    startTime: '2020/7/2',
+                    modifyTime: '2020/7/2',
+                    operation: <div className={styles.operation}>
+                        <img src={shareOff} />
+                        <img onClick={this.deleteInfo.bind(this,'任务周报',0)} className={styles.operationDelete} src={deleteOff} />
+                        <img src={collectionOff} />
+                    </div>
+                },
+                {
+                    key: '2',
+                    name: <div key='pdf'><img src={file} alt="" /><a onClick={this.OnFile.bind(this,'pdf')}>  GIS调度API</a></div>,
+                    route: '--',
+                    startTime: '2020/6/2',
+                    modifyTime: '2020/6/2',
+                    operation: <div className={styles.operation}>
+                        <img src={shareOff} />
+                        <img onClick={this.deleteInfo.bind(this,'GIS调度API',1)} className={styles.operationDelete} src={deleteOff} />
+                        <img src={collectionOff} />
+                    </div>
+                },
+                {
+                    key: '3',
+                    name: <div key='xlsx'><img src={file} alt="" /><a onClick={this.OnFile.bind(this,'xlsx')}>  应急任务</a></div>,
+                    route: '--',
+                    startTime: '2020/7/1',
+                    modifyTime: '2020/7/1',
+                    operation: <div className={styles.operation}>
+                        <img src={shareOff} />
+                        <img onClick={this.deleteInfo.bind(this,'应急任务',2)} className={styles.operationDelete} src={deleteOff} />
+                        <img src={collectionOff} />
+                    </div>
+                },
+                {
+                    key: '4',
+                    name: <div key='pdf'><img src={file} alt="" /><a onClick={this.OnFile.bind(this,'pdf')}>  医疗救援</a></div>,
+                    route: '--',
+                    startTime: '2020/6/15',
+                    modifyTime: '2020/7/2',
+                    operation: <div className={styles.operation}>
+                        <img src={shareOff} />
+                        <img onClick={this.deleteInfo.bind(this,'医疗救援',3)} className={styles.operationDelete} src={deleteOff} />
+                        <img src={collectionOff} />
+                    </div>
+                },
+                {
+                    key: '5',
+                    name: <div key='docx'><img src={file} alt="" /><a onClick={this.OnFile.bind(this,'docx')}> 视频录像</a></div>,
+                    route: '--',
+                    startTime: '2020/5/26',
+                    modifyTime: '2020/5/27',
+                    operation: <div className={styles.operation}>
+                        <img src={shareOff} />
+                        <img onClick={this.deleteInfo.bind(this,'视频录像',4)} className={styles.operationDelete} src={deleteOff} />
+                        <img src={collectionOff} />
+                    </div>
+                },
+            ],
+        }
+    }
+
+    OnFile(fileType){
+        this.setState({
+            fileState:'block',
+            fileType:fileType
+        })
+    }
+
+    deleteInfo(name,index){
+        console.log(index);
+        var data = [...this.state.data]
+        //删除元素
+        data.splice(index,1)
+        this.setState({
+            data:data
+        })
+        message.success(`${name} 文件删除成功！`);
+    }
+
+    //渲染前调用
+    componentWillMount() {
+
+    }
+
+
+    //渲染后调用
+    componentDidMount() {
+
+    }
+    goToPage(datas){
+        console.log('datas',datas);
+        this.setState({
+            columns:datas.columns,
+            data:datas.data,
+        })
+    }
+
+    goToFile(fileState,fileType){
+        console.log('tofile',fileState,fileType)
+        this.setState({
+            fileState:fileState,
+            fileType:fileType
+        })
+    }
+
+   
+
+    render() {
+      
+        return (<React.Fragment>
+            <div className={styles.allBoxs}>
+
+                <div className={styles.rightBox}>
+                   <Menus goToPage = {(data) => this.goToPage(data)} goToFile = {(file,type) => this.goToFile(file,type)}/>
+                    <div className={styles.ContentBlock}>
+                        <Tables goToFile = {(file) => this.goToFile(file)} data={this.state.data} columns={this.state.columns}/>
+                    </div>
+
+                    <Files fileState={this.state.fileState} fileType={this.state.fileType} goToFile = {(file) => this.goToFile(file)}/>
+
+                </div>
+            </div>
+
+        </React.Fragment>)
+    }
+}
+export default DocumentSharing;

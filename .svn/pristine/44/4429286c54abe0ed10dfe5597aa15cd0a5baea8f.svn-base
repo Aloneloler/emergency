@@ -1,0 +1,231 @@
+.controlImg {
+  z-index: 1;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 50px;
+  top: 90px;
+  background: white;
+}
+
+.enlargeImg {
+  background: white;
+  width: 60px;
+  height: 25px;
+  position: absolute;
+  left: 170px;
+  top: 130px;
+}
+
+.leftDiv {
+  z-index: 2;
+  position: absolute;
+  width: 31px;
+  height: 43px;
+  left: 50px;
+  top: 120px;
+  cursor: pointer;
+}
+
+.rightDiv {
+  z-index: 2;
+  position: absolute;
+  width: 30px;
+  height: 43px;
+  top: 120px;
+  left: 120px;
+  cursor: pointer;
+}
+
+.topDiv {
+  z-index: 2;
+  position: absolute;
+  width: 43px;
+  height: 30px;
+  left: 80px;
+  top: 90px;
+  cursor: pointer;
+}
+
+.bottomDiv {
+  z-index: 2;
+  position: absolute;
+  width: 43px;
+  height: 30px;
+  top: 160px;
+  left: 80px;
+  cursor: pointer;
+}
+
+.allBox {
+  // width: calc(100% - 100px);
+  width: 100%;
+  // padding-left: 74px;
+  overflow: hidden;
+  height: 100%;
+  // float: right;
+}
+
+.rightBox {
+  width: 100%;
+  height: 100%;
+  float: right;
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.menuBox {
+  width: 15%;
+  height: 100%;
+  background: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(239, 240, 241, 1);
+
+  .search{
+    margin: 32px auto;
+    text-align: center;
+
+    .inputSearch{
+        width: 80%;
+        margin: 0 auto;
+        height: 41px;
+        line-height: 41px;
+        
+    }
+    :global {
+        .ant-input-affix-wrapper .ant-input:not(:first-child) {
+            padding-left: 30px;
+            border-radius: 20px;
+        }
+    }
+}
+
+
+}
+
+.ContentBlock {
+  background: rgba(255, 255, 255, 1);
+  display: flex;
+  width: 85%;
+  height: 100%;
+  flex-wrap: wrap;
+}
+
+.videoImg {
+  width: 25px;
+  margin-right: 20px;
+  margin-left: -25px;
+}
+
+.onLinespan {
+  float: right;
+  color: #3599FF;
+}
+
+.offLinespan {
+  float: right;
+  color: #8F959D;
+}
+
+.controlDiv {
+  width: 277px;
+  height: 25%;
+  background: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(239, 240, 241, 1);
+  position: absolute;
+  top: 75%;
+
+}
+
+.title {
+  font-size: 14px;
+  margin-left: 23px;
+}
+
+.title1 {
+  font-size: 12px;
+  margin-left: 23px;
+  left: 165px;
+  top: 105px;
+  position: absolute;
+}
+
+.plus {
+  width: 30px;
+  height: 25px;
+  position: absolute;
+  left: 170px;
+  top: 130px;
+  cursor: pointer;
+}
+
+.reduce {
+  width: 30px;
+  height: 25px;
+  position: absolute;
+  left: 200px;
+  top: 130px;
+  cursor: pointer;
+}
+
+.blockDiv {
+  width: 125px;
+  height: 50px;
+  position: absolute;
+  // top: 3%;
+  right: 2%;
+
+  .one {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 12px;
+  }
+
+  .four {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    left: 50px;
+    top: 12px;
+  }
+
+  .nine {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 12px;
+    left: 100px;
+  }
+}
+
+.videoBlockDiv {
+  width: 98%;
+  height: 92%;
+  position: relative;
+  top: 30px;
+}
+
+.OneBlockDiv {
+  width: 1200px;
+  height: 900px;
+  position: absolute;
+  top: 5%;
+  left: 10%;
+}
+
+.FourBlockDiv {
+  width: 1200px;
+  height: 900px;
+  position: absolute;
+  top: 5%;
+  left: 10%;
+}
+
+.NineBlockDiv {
+  width: 1200px;
+  height: 900px;
+  position: absolute;
+  top: 5%;
+  left: 10%;
+}

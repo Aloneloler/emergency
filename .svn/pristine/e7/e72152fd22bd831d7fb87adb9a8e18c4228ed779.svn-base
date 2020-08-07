@@ -1,0 +1,45 @@
+.tableBox {
+  display: inline-block;
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+  .thead {
+    span.spanSty {
+      display: inline-block;
+      width: 150px;
+      height: 40px;
+      line-height: 40px;
+      vertical-align: top;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      &:first-child {
+        margin-left: 0 !important;
+      }
+      &:last-child {
+        margin-right: 0 !important;
+      }
+    }
+  }
+  .tbody {
+    span.spanSty {
+      display: inline-block;
+      width: 150px;
+      height: 40px;
+      line-height: 40px;
+      vertical-align: top;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      &:first-child {
+        margin-left: 0 !important;
+      }
+      &:last-child {
+        margin-right: 0 !important;
+      }
+    }
+  }
+}
+.cursorPointer {
+  cursor: pointer;
+}

@@ -1,0 +1,44 @@
+//首页
+export const homePageRoutes = [
+  {
+    path: '/HomePage',
+    name: '首页',
+    component: './HomePage/index',
+  },
+  {
+    path: '/GisDispatchingAnalysis',
+    name: 'GIS调度详情',
+    component: './GisDispatchingAnalysis/index',
+  },
+  {
+    path: '/Videoconferencing',
+    name: '视频会议',
+    component: './Videoconferencing/index',
+  },
+  {
+    path: '/VoiceDispatching',
+    name: '语音调度',
+    component: './VoiceDispatching/index',
+  },
+  {
+    path: '/VideoSurveillance',
+    name: '视频监控',
+    component: './VideoSurveillance/index',
+  },
+  {
+    path: '/TaskManagement',
+    name: '任务管理',
+    component: './TaskManagement/index',
+  },
+  {
+    path: '/DocumentSharing',
+    name: '文档共享',
+    component: './DocumentSharing/index',
+  },
+  {
+    path: '/GisDispatching',
+    name: 'GIS调度',
+    component: './GisDispatching/index',
+  }
+
+];

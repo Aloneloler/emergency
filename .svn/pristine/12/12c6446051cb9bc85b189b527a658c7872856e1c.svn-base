@@ -1,0 +1,10 @@
+.number {
+  font-size: 30px;
+  color: #fff;
+  // line-height: 52px;
+  font-family: PingFang-SC-Heavy;
+  font-weight: 800;
+  // overflow: hidden;
+  padding: 0;
+  //margin: 0;
+}

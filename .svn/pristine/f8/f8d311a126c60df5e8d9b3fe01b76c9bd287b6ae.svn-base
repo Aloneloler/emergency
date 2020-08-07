@@ -1,0 +1,46 @@
+.menuBox {
+    width     : 15%;
+    height    : 100%;
+    background: rgba(255, 255, 255, 1);
+    border    : 1px solid rgba(239, 240, 241, 1);
+
+    .search {
+        margin    : 32px auto;
+        text-align: center;
+
+        .inputSearch {
+            width      : 80%;
+            margin     : 0 auto;
+            height     : 41px;
+            line-height: 41px;
+
+        }
+
+        :global {
+            .ant-input-affix-wrapper .ant-input:not(:first-child) {
+                padding-left : 30px;
+                border-radius: 20px;
+            }
+        }
+    }
+
+    .departmentBox {
+        font-weight: 600;
+        font-family: AlibabaPuHuiTiR;
+    }
+
+    .departmentBox img {
+        margin-right: 10px;
+    }
+
+    .tab {
+        :global {
+
+            .ant-menu-inline,
+            .ant-menu-vertical,
+            .ant-menu-vertical-left {
+                border-right: 0;
+            }
+        }
+    }
+}

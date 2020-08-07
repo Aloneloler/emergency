@@ -1,0 +1,57 @@
+.filesBox{
+    width: 40%;
+    height: 86%;
+    display: flex;
+    left: 25%;
+    background: #fff;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    
+
+    .fileTop{
+      color: #333;
+      background-color: #f8f8f8;
+      border: 1px solid #eee;
+      height: 42px;
+      line-height: 42px;
+      padding: 0 80px 0 20px;
+
+      .x{
+        position: absolute;
+        cursor: pointer;
+        top: 16px;
+        right: 20px;
+        z-index: 2;
+      }
+    }
+
+    .flieContent{
+      width: 100%;
+      height: calc(100% - 42px);
+    }
+    .filePdf{
+      width: 100%;
+      height: calc(100% - 84px);
+      display: flex;
+      justify-content: center;
+      overflow: scroll;
+      overflow-x: hidden;
+    }
+    .filePdfFooter{
+      height: 42px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .filePdfPage{
+      margin: 0 10px;
+    }
+
+
+    
+  }
+  

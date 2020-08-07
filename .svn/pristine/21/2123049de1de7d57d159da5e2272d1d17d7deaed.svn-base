@@ -1,0 +1,52 @@
+.tableBox{
+    width: 100%;
+    height: 100%;
+    padding: 0 20px;
+    background-color: #ffffff;
+    
+
+    .tableBtnBox{
+        height: 70px;
+        width: 100%;
+        margin-top: 40px;
+        padding-right: 26px;
+        
+        button{
+            float: right;
+            width: 100px;
+            height: 30px;
+        }
+        .uploadBtn{
+            margin-right: 13px;
+        }
+        
+    }
+
+    :global {
+        .ant-table-thead > tr > th .ant-table-filter-icon {
+            position: absolute;
+            top: 0;
+            right: auto;
+        }
+        .ant-table-thead > tr:first-child > th:last-child {
+            border-top-right-radius: 4px;
+            text-align: center;
+        }
+    }
+    .operation{
+        text-align: center;
+        .operationDelete{
+            margin: 0 15px;
+        }
+        img{
+            cursor: pointer;
+        }
+    }
+}
+
+:global {
+    .styles__tableBox___2Btys .styles__tableBtnBox___1yBHB .styles__uploadBtn___1aYDQ {
+        margin-right: 13px;
+        float: right;
+    }
+}

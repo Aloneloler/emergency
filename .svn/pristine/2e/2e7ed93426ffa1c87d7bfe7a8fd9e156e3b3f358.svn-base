@@ -1,0 +1,91 @@
+.allBox {
+  // width: calc(100% - 100px);
+  width: 100%;
+  // padding-left: 74px;
+  overflow: hidden;
+  height: 100%;
+  // float: right;
+}
+
+.leftBox {
+  width: 6%;
+  height: 100%;
+  background: rgba(30, 30, 45, 1);
+}
+
+.rightBox {
+  width: 100%;
+  height: 100%;
+  float: right;
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #DDDFE1;
+  border-radius: 4px;
+}
+
+.ContentBlock {
+  display: flex;
+  width: 85%;
+  height: 100%;
+  flex-wrap: wrap;
+}
+
+.popup {
+  position: absolute;
+  bottom: 16%;
+  right: 2%;
+  width: 269px;
+  height: 251px;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 3;
+
+  .popupTop {
+    display: flex;
+    align-items: center;
+    height: 30%;
+    color: #fff;
+    position: relative;
+
+    .x {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+    }
+
+    .user {
+      margin: 0 20px;
+    }
+  }
+
+  .popupContent {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .popupFooter {
+    display: flex;
+    justify-content: center;
+
+    .popupBtn {
+      margin-right: 20px;
+      background-color: #19AB19;
+      border-color: #19AB19;
+    }
+
+    .closeBtn {
+      background-color: #F35353;
+      border-color: #F35353;
+    }
+  }
+}

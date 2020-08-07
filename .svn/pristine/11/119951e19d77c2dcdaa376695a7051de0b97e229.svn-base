@@ -1,0 +1,159 @@
+import React from 'react';
+import styles from './styles.less';
+import router from 'umi/router';
+
+import voice from '@/assets/VoiceDispatching/voice.png';
+import Trash from '@/assets/VoiceDispatching/Trash.png';
+import deletes from '@/assets/VoiceDispatching/delete.png';
+import search1 from '@/assets/VoiceDispatching/search1.png';
+import dial from '@/assets/VoiceDispatching/dial.png';
+import Suspend from '@/assets/VoiceDispatching/Suspend.png';
+
+import { Tabs, Menu, Input, Button } from 'antd';
+
+const { SubMenu } = Menu;
+const { TabPane } = Tabs;
+
+class Operation extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
+    //渲染前调用
+    componentWillMount() {
+
+    }
+
+
+    //渲染后调用
+    componentDidMount() {
+
+    }
+
+
+    onSelectChange = selectedRowKeys => {
+        // console.log('selectedRowKeys changed: ', selectedRowKeys);
+        // this.setState({ selectedRowKeys });
+    };
+    handleClick = e => {
+        // console.log('click ', e);
+    };
+    handleClick2 = e => {
+        // console.log('click ', e);
+    };
+
+    render() {
+        const rowSelection = {
+            // selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
+
+
+        return (<React.Fragment>
+
+            <div className={styles.operationBox}>
+                <div className={styles.dialBox}>
+                    <div className={styles.numBox}>
+                        <div>
+                            <Button className={styles.numBtn} type="primary">1</Button>
+                            <Button className={styles.numBtn} type="primary">2</Button>
+                            <Button className={styles.numBtn} type="primary">3</Button>
+                        </div>
+                        <div>
+                            <Button className={styles.numBtn} type="primary">4</Button>
+                            <Button className={styles.numBtn} type="primary">5</Button>
+                            <Button className={styles.numBtn} type="primary">6</Button>
+                        </div>
+                        <div>
+                            <Button className={styles.numBtn} type="primary">7</Button>
+                            <Button className={styles.numBtn} type="primary">8</Button>
+                            <Button className={styles.numBtn} type="primary">9</Button>
+                        </div>
+                        <div>
+                            <Button className={styles.numBtn} type="primary">*</Button>
+                            <Button className={styles.numBtn} type="primary">0</Button>
+                            <Button className={styles.numBtn} type="primary">#</Button>
+                        </div>
+                    </div>
+
+                    <div className={styles.inputNum}>
+                        <Input />
+                        {/* <img src={deletes} alt="" /> */}
+                    </div>
+
+                    <div className={styles.dialBtn}>
+                        <img src={dial} alt="" />
+                    </div>
+
+                </div>
+                <div className={styles.applyVoice}>
+                    <Button className={styles.applyBtn} size='large' shape="round" type="primary">申请话语权</Button>
+                </div>
+
+                <div className={styles.monitorBox}>
+                    <div className={styles.monitorBoxTop}>
+                        监听操作
+                                </div>
+
+                    <div>
+                        <div className={styles.monitorTitle}>
+                            <div>监听对象</div>
+                            <div>操作</div>
+                        </div>
+                        <div className={styles.monitorContent}>
+                            <div>李江河</div>
+                            <div className={styles.monitorIcon}>
+                                <img src={voice} alt="" />
+                                <img src={Suspend} alt="" />
+                                <img src={Trash} alt="" />
+                            </div>
+                        </div>
+                        <div className={styles.monitorContent}>
+                            <div>越小小</div>
+                            <div className={styles.monitorIcon}>
+                                <img src={voice} alt="" />
+                                <img src={Suspend} alt="" />
+                                <img src={Trash} alt="" />
+                            </div>
+                        </div>
+                        <div className={styles.monitorContent}>
+                            <div>王小刚</div>
+                            <div className={styles.monitorIcon}>
+                                <img src={voice} alt="" />
+                                <img src={Suspend} alt="" />
+                                <img src={Trash} alt="" />
+                            </div>
+                        </div>
+                        <div className={styles.monitorContent}>
+                            <div>张楚楚</div>
+                            <div className={styles.monitorIcon}>
+                                <img src={voice} alt="" />
+                                <img src={Suspend} alt="" />
+                                <img src={Trash} alt="" />
+                            </div>
+                        </div>
+                        <div className={styles.monitorContent}>
+                            <div>李江河</div>
+                            <div className={styles.monitorIcon}>
+                                <img src={voice} alt="" />
+                                <img src={Suspend} alt="" />
+                                <img src={Trash} alt="" />
+                            </div>
+                        </div>
+                        <div className={styles.monitorBtnBox}>
+                            <Button shape="round" className={styles.monitorBtn} size='small' type="primary">监听</Button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </React.Fragment>)
+    }
+}
+export default Operation;

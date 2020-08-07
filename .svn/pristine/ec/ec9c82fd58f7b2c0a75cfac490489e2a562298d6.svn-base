@@ -1,0 +1,22 @@
+export default {
+    namespace: 'GisModel',
+    state: {
+        DetailsShow: false
+    },
+
+    subscriptions: {
+        setup({ dispatch, history }) { },
+    },
+
+    effects: {
+
+    },
+
+    reducers: {
+        //设计对应导航的列表
+        setDetailsShow(state, action) {
+            state.DetailsShow = action.payload;
+            return { ...state };
+        }
+    },
+};

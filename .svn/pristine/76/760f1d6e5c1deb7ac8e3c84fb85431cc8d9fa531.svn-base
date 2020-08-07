@@ -1,0 +1,10 @@
+.Emergencies {
+  width: 200px;
+  font-size: 18px;
+  font-family: FZLTHJW;
+  font-weight: normal;
+  color: rgba(255, 79, 0, 1);
+  overflow: hidden; //超出的文本隐藏
+  text-overflow: ellipsis; //溢出用省略号显示
+  white-space: nowrap; //溢出不换行
+}

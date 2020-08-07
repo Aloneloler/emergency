@@ -1,0 +1,70 @@
+.allBoxs {
+    // width: calc(100% - 100px);
+    width: 100%;
+    padding-left: 74px;
+    overflow: hidden;
+    height: 100%;
+    // float: right;
+  }
+  
+  .leftBox {
+    width: 6%;
+    height: 100%;
+    background: rgba(30, 30, 45, 1);
+  }
+  
+  .rightBox {
+    width: 100%;
+    height: 100%;
+    float: right;
+    display: flex;
+    flex-wrap: wrap;
+  
+  }
+  
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: #fff;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #DDDFE1;
+    border-radius: 4px;
+  }
+  
+  .ContentBlock {
+    display: flex;
+    width: 85%;
+    height: 100%;
+    flex-wrap: wrap;
+  }
+  .operation{
+    text-align: center;
+    .operationDelete{
+        margin: 0 15px;
+    }
+    img{
+        cursor: pointer;
+    }
+}
+.filesBox{
+  width: 40%;
+  height: 50%;
+  display: flex;
+  left: 25%;
+  background: #fff;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  position: absolute;
+  border: 1px solid #eee;
+  border-radius: 12px;
+
+  .x{
+    position: absolute;
+    top: 13px;
+    right: 20px;
+    z-index: 2;
+  }
+}

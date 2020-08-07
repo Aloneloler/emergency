@@ -1,0 +1,98 @@
+.operationBox{
+    width: 20%;
+    height: 60%;
+    background: rgba(246,248,249,1);
+   
+
+    .dialBox{
+        padding: 11px 11px 14px 14px;
+        background-color: rgba(255,255,255,1);
+        box-shadow:0px 0px 6px 0px rgba(0, 0, 0, 0.11);
+        height: 26%;
+        margin: 20px;
+        position: relative;
+
+        .numBox{
+            float: left;
+            .numBtn{
+                margin: 2px;
+            }
+        }
+       
+    }
+    .inputNum{
+        float: left;
+        margin-left: 3%;
+        width: 40%;
+
+        img{
+            float: right;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+    }
+    .dialBtn{
+        position: absolute;
+        right: 10%;
+        bottom: 9%;
+        cursor: pointer;
+    }
+
+    .applyVoice{
+        margin: 10px 20px;
+        background-color: rgba(255,255,255,1);
+        padding: 8px 16px;
+        box-shadow:0px 0px 6px 0px rgba(0, 0, 0, 0.11);
+
+        .applyBtn{
+            width: 100%;
+            background-color: #12D811;
+            border-color: #12D811;
+        }
+    }
+
+    .monitorBox{
+        margin: 0 20px;
+        max-height: 60%;
+        background-color: rgba(255,255,255,1);
+        padding: 8px 16px;
+        box-shadow:0px 0px 6px 0px rgba(0, 0, 0, 0.11);
+
+        .monitorBoxTop{
+            height: 34px;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(239,240,241,1);;
+        }
+        .monitorTitle{
+            div{
+                float: left;
+                width: 50%;
+                text-align: center;
+                margin: 10px 0;
+            }
+        }
+        .monitorContent{
+            div{
+                float: left;
+                width: 50%;
+                text-align: center;
+                margin: 10px 0;
+            }
+            .monitorIcon{
+                img{
+                    margin: 0 5px;
+                    cursor: pointer;
+                }
+            }
+        }
+        .monitorBtnBox{
+            text-align: center;
+
+            .monitorBtn{
+                background-color: #FD9B00;
+            border-color: #FD9B00;
+            }
+        }
+    }
+}

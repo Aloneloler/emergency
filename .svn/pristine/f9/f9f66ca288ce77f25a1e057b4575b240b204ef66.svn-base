@@ -1,0 +1,39 @@
+.filesBox{
+    width: 40%;
+    height: 50%;
+    display: flex;
+    left: 25%;
+    background: #fff;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    position: absolute;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    overflow: scroll;
+
+    .fileTop{
+      color: #333;
+      background-color: #f8f8f8;
+      border: 1px solid #eee;
+      height: 42px;
+      line-height: 42px;
+      padding: 0 80px 0 20px;
+
+      .x{
+        position: absolute;
+        cursor: pointer;
+        top: 16px;
+        right: 20px;
+        z-index: 2;
+      }
+    }
+
+    :global {
+      .pg-viewer-wrapper {
+        height: 88%;
+    }
+    }
+    
+  }
+  

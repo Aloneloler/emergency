@@ -1,0 +1,114 @@
+.reactMarqueeBox{
+  width:100%;
+  height:100%;
+  //position: absolute;
+  //top:0;
+  //left:0;
+  //overflow: hidden;
+  font-family: "Microsoft YaHei";
+}
+.headLine{
+  width: 100%;
+  //background: #045881;
+  text-align: left;
+  color: #fff;
+}
+.reactMarqueeBox .marqueeVerticalWrap{
+  width:100%;
+  height:100%;
+  overflow: hidden;
+}
+
+.reactMarqueeBox .marqueeVerticalWrap .marqueeVerticalItem .marqueeVerticalTxt{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing:unset;
+  text-align: left;
+  -moz-box-sizing: unset; /*Firefox3.5+*/
+  -webkit-box-sizing: unset; /*Safari3.2+*/
+  -o-box-sizing:unset; /*Opera9.6*/
+  -ms-box-sizing: unset; /*IE8*/
+  //border-bottom: 3px solid #00b8ff;
+  transition: all .3s ease;
+  margin-top: 10px;
+
+}
+.marqueeVerticalTitle{
+  transition: all .3s ease;
+  //margin-bottom: 10px;
+}
+.reactMarqueeBox .marqueeVerticalWrap .marqueeVerticalItem .marqueeVerticalTxt span{
+  display: inline-block;
+  margin-right: 10px;
+}
+
+//   横向滚动
+//.react-marquee-box .marquee-landscape-wrap{
+//  position: absolute;
+//  left:0;
+//  top:0;
+//  overflow: hidden;
+//  width:100%;
+//  height: 100%;
+//  display: flex;s
+//  align-items: center;
+//}
+//
+//.react-marquee-box .marquee-landscape-wrap .marquee-landscape-item{
+//  float: left;
+//  height: 100%;
+//  white-space: nowrap;
+//}
+//
+//.react-marquee-box .marquee-landscape-wrap .marquee-landscape-item .marquee-landscape-txt{
+//  padding:0 10px;
+//  white-space: nowrap;
+//  display: inline-block;
+//  height: 100%;
+//}
+.itemList{
+  margin-bottom:10px;
+  padding: 5px 10px;
+  border:1px solid;
+  //border-bottom: 1px solid;
+  //border-bottom-color: #00b8ff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+.listIcon{
+  width: auto;
+  float: left;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .leftTxt{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing:unset;
+    //text-align: left;
+    -moz-box-sizing: unset; /*Firefox3.5+*/
+    -webkit-box-sizing: unset; /*Safari3.2+*/
+    -o-box-sizing:unset; /*Opera9.6*/
+    -ms-box-sizing: unset; /*IE8*/
+  }
+}
+.listTxt{
+  //width: calc(~'100% - 40px');
+  float: left;
+  //display: inline-block;
+}
+.tit{
+  font-size:18px;
+  height:18px;
+  line-height:18px;
+  //font-family:PingFang-SC-Heavy;
+  font-weight:800;
+  color:rgba(43,45,60,1);
+}
+

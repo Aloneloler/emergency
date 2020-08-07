@@ -1,0 +1,172 @@
+import React from 'react';
+import styles from './styles.less';
+import router from 'umi/router'
+
+
+import { Tag, Button,Table, } from 'antd';
+
+
+const columns = [
+    {
+        title: '任务名称',
+        dataIndex: 'name',
+      },
+    {
+      title: '任务类型',
+      dataIndex: 'type',
+    },
+    {
+      title: '任务开始时间',
+      dataIndex: 'startTime',
+    },
+    {
+      title: '任务结束时间',
+      dataIndex: 'overTime',
+    },
+    {
+        title: '实际开始时间',
+        dataIndex: 'realStartTime',
+      },
+      {
+        title: '实际结束时间',
+        dataIndex: 'realOverTime',
+      },
+      {
+        title: '任务进度',
+        dataIndex: 'progress',
+      },
+      {
+        title: '任务描述',
+        dataIndex: 'describe',
+      },
+      {
+        title: '执行方案',
+        dataIndex: 'programme',
+      },
+      {
+        title: '状态',
+        dataIndex: 'state',
+      },
+      {
+        title: '操作',
+        dataIndex: 'operation',
+      },
+  ];
+
+  const data = [
+    {
+      key: '1',
+      name: '[20191029]化工厂救援任务',
+      type:'救援任务',
+      startTime:'2019-10-29',
+      overTime:'2019-11-29',
+      realStartTime:'2019-11-03',
+      realOverTime:'2019-11-27',
+      progress:'0%',
+      describe:'',
+      programme:'',
+      state: <Tag color="geekblue">待接收</Tag>,
+      operation: <Button type="primary">接受</Button>
+    },
+    {
+        key: '2',
+        name: '[20190501]治安巡逻保障任务',
+        type:'保障任务',
+        startTime:'2019-05-01',
+        overTime:'2019-05-03',
+        realStartTime:'2019-05-01',
+        realOverTime:'2019-05-03',
+        progress:'3%',
+        describe:'',
+        programme:'',
+        state: <Tag color="blue">待执行</Tag>,
+        operation: ''
+    },
+    {
+        key: '3',
+        name: '[20190202]医疗保障救援任务',
+        type:'保障任务',
+        startTime:'2019-02-02',
+        overTime:'2019-02-04',
+        realStartTime:'2019-02-03',
+        realOverTime:'2019-02-05',
+        progress:'56%',
+        describe:'',
+        programme:'',
+        state: <Tag color="orange">暂停</Tag>,
+        operation: ''
+    },
+    {
+        key: '4',
+        name: '[20190105]交通保障任务',
+        type:'保障任务',
+        startTime:'2019-01-05',
+        overTime:'2019-01-06',
+        realStartTime:'2019-01-06',
+        realOverTime:'2019-01-06',
+        progress:'20%',
+        describe:'',
+        programme:'',
+        state: <Tag color="red">终止</Tag>,
+        operation: ''
+    },
+    {
+        key: '5',
+        name: '[20190103]高层火灾救援任务',
+        type:'救援任务',
+        startTime:'2019-01-03',
+        overTime:'2019-01-04',
+        realStartTime:'2019-01-03',
+        realOverTime:'2019-01-03',
+        progress:'100%',
+        describe:'',
+        programme:'',
+        state: <Tag color="green">完成</Tag>,
+        operation: ''
+    },
+  ];
+
+
+class Tables extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
+    //渲染前调用
+    componentWillMount() {
+
+    }
+
+
+    //渲染后调用
+    componentDidMount() {
+
+    }
+
+
+    onSelectChange = selectedRowKeys => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        // this.setState({ selectedRowKeys });
+      };
+
+    render() {
+        const rowSelection = {
+            // selectedRowKeys,
+            onChange: this.onSelectChange,
+          };
+
+       
+        return (<React.Fragment>
+            
+                <div className={styles.tableBox}>
+                    <Table columns={columns} dataSource={data} />
+                </div>
+                
+            
+
+        </React.Fragment>)
+    }
+}
+export default Tables;

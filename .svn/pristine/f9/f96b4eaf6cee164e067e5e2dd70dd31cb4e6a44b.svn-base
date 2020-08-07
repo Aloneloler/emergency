@@ -1,0 +1,86 @@
+import React from 'react';
+import styles from './styles.less';
+import router from 'umi/router';
+import Refresh from '@/assets/VoiceDispatching/Refresh.png';
+import details from '@/assets/VoiceDispatching/details.png';
+import search from '@/assets/VoiceDispatching/search.png';
+import out from '@/assets/VoiceDispatching/out.png';
+import xiangmu from '@/assets/DocumentSharing/项目建议书.docx';
+import ceshi from '@/assets/DocumentSharing/测试统计数据.xlsx';
+import taian from '@/assets/DocumentSharing/taian.pdf';
+import biji from '@/assets/DocumentSharing/笔记.pdf';
+import headImg from '@/assets/DocumentSharing/headImg.png';
+import x from '@/assets/DocumentSharing/x.png';
+
+//react文件预览
+import FileViewer from 'react-file-viewer';
+
+import PDF from 'react-pdf-js';
+
+import Carousel from 'react-images';
+
+
+class Files extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fileState: props.fileState,
+            // type: props.type,
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            fileState: nextProps.fileState,
+        })
+    }
+    //渲染前调用
+    componentWillMount() {
+
+    }
+
+
+    //渲染后调用
+    componentDidMount() {
+
+    }
+
+    closeFile() {
+        this.setState({
+            fileState: 'none',
+        })
+        this.props.goToFile('none');
+    }
+
+
+
+    render() {
+
+        return (<React.Fragment>
+
+            <div style={{ display: this.state.fileState }} className={styles.filesBox}>
+                <div className={styles.fileTop}>
+                    <span>预览</span>
+                    <img className={styles.x} src={x} onClick={this.closeFile.bind(this)} alt="" />
+                </div>
+                {/* <FileViewer
+                        fileType='docx'//文件类型
+                        filePath={xiangmu} //文件地址
+                        onError={console.log('文件查看器在获取或呈现请求的资源时发生错误')} //函数[可选]：当文件查看器在获取或呈现请求的资源时发生错误时将调用的函数。在这里可以传递日志记录实用程序的回调。
+                        errorComponent={console.log("出现错误")} //[可选]：发生错误时呈现的组件，而不是react-file-viewer随附的默认错误组件。
+                        unsupportedComponent={console.log("不支持")} //[可选]：在不支持文件格式的情况下呈现的组件。
+                    /> */}
+
+                {/* <PDF
+                    file={biji}
+                /> */}
+
+                <Carousel views={headImg} />
+            </div>
+
+
+
+        </React.Fragment>)
+    }
+}
+export default Files;

@@ -1,0 +1,141 @@
+.menuDiv {
+  position: relative;
+
+  width: 100%;
+  height: calc(100%);
+  background: white;
+}
+
+.rightDiv {
+  position: relative;
+  width: calc(100% - 246px);
+  height: 100%;
+  background: #F3F6F9;
+  float: right;
+
+  .searchDiv {
+    position: relative;
+    margin-left: 10px;
+    margin-top: 12px;
+    height: calc(100% - 41px);
+    width: 362px;
+    background: white;
+    float: left;
+
+
+    .listStyle {
+      position: relative;
+      margin-top: 40px;
+      height: calc(100% - 90px);
+      width: 100%;
+
+      .phoneSpan {
+        font-size: 14px;
+        float: left;
+        height: 0px;
+      }
+
+      .timeSpan {
+        font-size: 12px;
+        margin-left: 240px;
+      }
+
+      .textSpan {
+        font-size: 14px;
+        margin-top: -20px;
+      }
+
+      :global {
+
+        .ant-menu-inline .ant-menu-item,
+        .ant-menu-inline .ant-menu-submenu-title {
+          width: calc(100% + -24px);
+          height: 65px;
+          border-bottom: 1px solid #EEEEEE;
+          margin-left: 6px;
+        }
+      }
+    }
+  }
+
+  .showDiv {
+    position: relative;
+    margin-left: 21px;
+    margin-top: 12px;
+    height: calc(100% - 41px);
+    width: calc(100% - 476px);
+    background: white;
+    float: left;
+
+    .headDiv {
+      height: 58px;
+      width: 100%;
+      border-bottom: 1px solid #EEEEEE;
+
+      .headSpan {
+        font-size: 16px;
+        margin-left: 21px;
+        position: relative;
+        top: 23px;
+      }
+    }
+
+    .bodyDiv {
+      height: 641px;
+      width: 100%;
+      border-bottom: 1px solid #EEEEEE;
+
+      img {
+        margin-top: 40px;
+        position: relative;
+        margin-left: 43px;
+      }
+
+      .floatDiv {
+        width: 263px;
+        height: 102px;
+        background: #EFF0F1;
+        position: relative;
+        top: -25px;
+        left: 127px;
+
+        .inSpanStyle {
+          font-size: 14px;
+          width: 230px;
+          position: relative;
+          top: 16px;
+          left: 24px;
+        }
+      }
+
+      .floatNumDiv {
+        margin-left: -60px;
+        margin-top: 75px;
+        position: fixed;
+      }
+
+    }
+
+    .footDiv {
+      height: 257px;
+      width: 100%;
+
+      .footSpan {
+        color: #A3A3A3;
+        margin: 15px;
+        position: relative;
+        top: 10px;
+      }
+
+      :global {
+        .ant-btn {
+          position: absolute;
+          bottom: 30px;
+          right: 40px;
+        }
+      }
+    }
+  }
+
+
+}

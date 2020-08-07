@@ -1,0 +1,151 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable no-useless-constructor */
+import React from "react";
+import styles from "./styles.less";
+import { connect } from "dva";
+// import Menu from '../Menu';
+import moment from 'moment';
+import GisDispatchingImg from '@/assets/leftmenu/GisDispatchingImg.png';
+import GisDispatchingIcon from '@/assets/leftmenu/GisDispatchingIcon.png';
+import VoiceDispatchingIcon from '@/assets/leftmenu/VoiceDispatchingIcon.png';
+import VoiceDispatchingImg from '@/assets/leftmenu/VoiceDispatchingImg.png';
+import VideoconferencingIcon from '@/assets/leftmenu/VideoconferencingIcon.png';
+import VideoconferencingImg from '@/assets/leftmenu/VideoconferencingImg.png';
+import VideoSurveillanceIcon from '@/assets/leftmenu/VideoSurveillanceIcon.png';
+import VideoSurveillanceImg from '@/assets/leftmenu/VideoSurveillanceImg.png';
+import TaskManagementIcon from '@/assets/leftmenu/TaskManagementIcon.png';
+import TaskManagementImg from '@/assets/leftmenu/TaskManagementImg.png';
+import DocumentSharingIcon from '@/assets/leftmenu/DocumentSharingIcon.png';
+import DocumentSharingImg from '@/assets/leftmenu/DocumentSharingImg.png';
+import router from 'umi/router';
+import { Popconfirm, message, Avatar } from 'antd';
+function mapStateToProps({ globalModel }) {
+    return {
+        globalModel: globalModel
+
+    };
+}
+@connect(mapStateToProps)
+class LeftMenu extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            time: moment().format('YYYY/MM/DD  HH:mm:ss'),
+        }
+
+    }
+    liOnclick = (data) => {
+        let { dispatch } = this.props;
+        dispatch({
+            type: 'globalModel/setLeftMenuState',
+            payload: data,
+        });
+        router.push({
+            pathname: `/${data}`,
+            query: {
+            },
+        });
+    }
+    //渲染前调用
+    componentWillMount() {
+        let url = window.location.hash;
+        let urlList = url.split('/');
+        let { dispatch } = this.props;
+        dispatch({
+            type: 'globalModel/setLeftMenuState',
+            payload: urlList[1],
+        });
+    }
+    confirm(e) {
+        // console.log(e);
+        message.success('Click on Yes');
+        router.push({
+            pathname: `/login`,
+            query: {
+            },
+        });
+    }
+
+    cancel(e) {
+        // console.log(e);
+        message.error('Click on No');
+    }
+    componentDidMount() {
+
+    }
+    render() {
+        // let { activeMenuItemName } = this.props.globalModel;
+        let action = this.props.globalModel.leftMenuState;
+        return (<div className={styles.LeftMenuDiv}>
+            <div>
+                <Popconfirm
+                    placement="right"
+                    title="确认退出?"
+                    onConfirm={this.confirm}
+                    onCancel={this.cancel}
+                    okText="是"
+                    cancelText="否"
+                >
+                    <div className={styles.userDiv}>
+                        <Avatar size={40} style={{ color: '#fff', backgroundColor: '#3699FF', fontSize: '12px' }}>用户</Avatar>
+                    </div>
+
+                </Popconfirm>
+            </div>
+            <div className={styles.LeftMenuDivMain}>
+                <ul className={styles.LeftMenuDivMainUl}>
+                    <li className={action === 'GisDispatching' ? styles.LeftMenuDivMainUlLiAction : styles.LeftMenuDivMainUlLi} onClick={this.liOnclick.bind(this, 'GisDispatching')}>
+                        <div className={styles.imgDiv}>
+                            <img src={action === 'GisDispatching' ? GisDispatchingImg : GisDispatchingIcon} alt={'GIS调度'} />
+                        </div>
+                        <div className={styles.liMainDiv}>
+                            GIS调度
+                        </div>
+                    </li>
+                    <li className={action === 'VoiceDispatching' ? styles.LeftMenuDivMainUlLiAction : styles.LeftMenuDivMainUlLi} onClick={this.liOnclick.bind(this, 'VoiceDispatching')}>
+                        <div className={styles.imgDiv}>
+                            <img src={action === 'VoiceDispatching' ? VoiceDispatchingIcon : VoiceDispatchingImg} alt={'语音调度'} />
+                        </div>
+                        <div className={styles.liMainDiv}>
+                            语音调度
+                        </div>
+                    </li>
+                    <li className={action === 'Videoconferencing' ? styles.LeftMenuDivMainUlLiAction : styles.LeftMenuDivMainUlLi} onClick={this.liOnclick.bind(this, 'Videoconferencing')}>
+                        <div className={styles.imgDiv}>
+                            <img src={action === 'Videoconferencing' ? VideoconferencingIcon : VideoconferencingImg} alt={'视频会议'} />
+                        </div>
+                        <div className={styles.liMainDiv}>
+                            视频会议
+                        </div>
+                    </li>
+                    <li className={action === 'VideoSurveillance' ? styles.LeftMenuDivMainUlLiAction : styles.LeftMenuDivMainUlLi} onClick={this.liOnclick.bind(this, 'VideoSurveillance')}>
+                        <div className={styles.imgDiv}>
+                            <img src={action === 'VideoSurveillance' ? VideoSurveillanceIcon : VideoSurveillanceImg} alt={'视频监控'} />
+                        </div>
+                        <div className={styles.liMainDiv}>
+                            视频监控
+                        </div>
+                    </li>
+                    <li className={action === 'TaskManagement' ? styles.LeftMenuDivMainUlLiAction : styles.LeftMenuDivMainUlLi} onClick={this.liOnclick.bind(this, 'TaskManagement')}>
+                        <div className={styles.imgDiv}>
+                            <img src={action === 'TaskManagement' ? TaskManagementIcon : TaskManagementImg} alt={'任务管理'} />
+                        </div>
+                        <div className={styles.liMainDiv}>
+                            任务管理
+                        </div>
+                    </li>
+                    <li className={action === 'DocumentSharing' ? styles.LeftMenuDivMainUlLiAction : styles.LeftMenuDivMainUlLi} onClick={this.liOnclick.bind(this, 'DocumentSharing')}>
+                        <div className={styles.imgDiv}>
+                            <img src={action === 'DocumentSharing' ? DocumentSharingIcon : DocumentSharingImg} alt={'文档共享'} />
+                        </div>
+                        <div className={styles.liMainDiv}>
+                            文档共享
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>);
+    }
+}
+
+export default LeftMenu;

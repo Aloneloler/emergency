@@ -1,0 +1,576 @@
+{
+  "version": 8,
+  "name": "江苏南通_blue",
+  "metadata": {
+    "mapbox:autocomposite": true,
+    "mapbox:type": "default",
+    "maputnik:renderer": "mbgljs"
+  },
+  "center": [120.648, 32.1],
+  "zoom": 6.8,
+  "bearing": 0,
+  "pitch": 0,
+  "sources": {
+    "jiangsu_nantong": {
+      "type": "vector",
+      "tiles": [
+        "http://2.82.16.25:7000/data/jiangsu_nantong_all/{z}/{x}/{y}.pbf"
+      ],
+      "minZoom": 0,
+      "maxZoom": 24
+    }
+  },
+  "sprite": "http://2.82.16.25:7000/styles/beijing_blue/sprite",
+  "glyphs": "http://2.82.16.25:7000/fonts/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {"background-color": "rgba(26,33,51, 1)"}
+    },
+    {
+      "id": "outside_city_R",
+      "type": "fill",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_city_R_outside",
+      "minzoom": 5,
+      "maxzoom": 9,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-color": "rgba(14, 26, 53, 1)",
+        "fill-outline-color": "rgba(30, 35, 48, 1)"
+      }
+    },
+    {
+      "id": "outside_county_R",
+      "type": "fill",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_county_R_outside",
+      "minzoom": 9,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-color": "rgba(14, 26, 53, 1)",
+        "fill-outline-color": "rgba(30, 35, 48, 1)"
+      }
+    },
+    {
+      "id": "outside_fish_L_ocean",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_fish_L_ocean",
+      "minzoom": 5,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {"line-color": "rgba(37, 37, 65, 0.6)", "line-width": 1}
+    },
+    {
+      "id": "outside_fish_L",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_fish_L_outside",
+      "minzoom": 5,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {"line-color": "rgba(23, 36, 55, 0.6)", "line-width": 1}
+    },
+    {
+      "id": "nantong_city_L-91",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_city_L",
+      "minzoom": 9,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-color": "rgba(42, 63, 87, 0.8)",
+        "line-width": {"stops": [[9, 10], [10, 12]]},
+        "line-translate": [0, 6]
+      }
+    },
+    {
+      "id": "nantong_city_L-71",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_city_L",
+      "minzoom": 7,
+      "maxzoom": 9,
+      "paint": {
+        "line-color": "rgba(42, 63, 87, 0.8)",
+        "line-width": {"stops": [[7, 6], [8, 8]]},
+        "line-translate": [0, 4]
+      }
+    },
+    {
+      "id": "nantong_city_L-51",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_city_L",
+      "minzoom": 5,
+      "maxzoom": 7,
+      "paint": {
+        "line-color": "rgba(42, 63, 87, 0.8)",
+        "line-width": {"stops": [[5, 4], [6, 5]]},
+        "line-translate": [0, 3]
+      }
+    },
+    {
+      "id": "nantong_city_R",
+      "type": "fill",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_city_R",
+      "minzoom": 5,
+      "maxzoom": 7,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-color": "rgba(44, 77, 111, 1)",
+        "fill-outline-color": "rgba(56, 116, 176, 2)",
+        "fill-antialias": false,
+        "fill-opacity": 1,
+        "fill-translate-anchor": "map"
+      }
+    },
+    {
+      "id": "nantong_county_R",
+      "type": "fill",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_county_R",
+      "minzoom": 7,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-color": "rgba(44, 77, 111, 0.25)",
+        "fill-outline-color": "rgba(44, 77, 111, 0.2)"
+      }
+    },
+    {
+      "id": "nantong_vegetation_R",
+      "type": "fill",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_vegetation_R",
+      "minzoom": 9,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {"fill-color": "rgba(37, 68, 88, 1)"}
+    },
+    {
+      "id": "nantong_ocean_R",
+      "type": "fill",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_ocean_R",
+      "minzoom": 5,
+      "maxzoom": 24,
+      "layout": {"visibility": "none"},
+      "paint": {
+        "fill-color": "rgba(20, 35, 59, 1)",
+        "fill-outline-color": "rgba(234, 233, 217, 1)"
+      }
+    },
+    {
+      "id": "nantong_water_R_1",
+      "type": "fill",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_water_R_1",
+      "minzoom": 7,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-color": "rgba(60, 72, 103, 1)",
+        "fill-outline-color": "rgba(60, 72, 103, 1)"
+      }
+    },
+    {
+      "id": "nantong_water_R_2",
+      "type": "fill",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_water_R_2",
+      "minzoom": 13,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-color": "rgba(60, 72, 103, 0.5)",
+        "fill-outline-color": "rgba(60, 72, 103, 1)"
+      }
+    },
+    {
+      "id": "nantong_county_L",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_county_R",
+      "minzoom": 7,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-color": "rgba(121, 172, 255, 2)",
+        "line-dasharray": [4, 4]
+      }
+    },
+    {
+      "id": "nantong_city_L_8",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_city_L",
+      "minzoom": 7,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {"line-color": "rgba(56, 116, 176, 2)", "line-width": 3}
+    },
+    {
+      "id": "nantong_city_L_5",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_city_L",
+      "minzoom": 5,
+      "maxzoom": 7,
+      "layout": {"visibility": "visible"},
+      "paint": {"line-color": "rgba(56, 116, 176, 2)", "line-width": 3}
+    },
+    {
+      "id": "nantong_road_L_3-14",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_3",
+      "minzoom": 14,
+      "maxzoom": 24,
+      "layout": {"visibility": "none"},
+      "paint": {"line-color": "rgba(33, 49, 81, 1)", "line-width": 2}
+    },
+    {
+      "id": "nantong_road_L_3-13",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_3",
+      "minzoom": 13,
+      "maxzoom": 14,
+      "layout": {"visibility": "none"},
+      "paint": {"line-color": "rgba(8, 46, 79, 1)", "line-width": 1}
+    },
+    {
+      "id": "nantong_road_L_3-10",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_3",
+      "minzoom": 13,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {"line-color": "rgba(50, 70, 99, 1)", "line-width": 1}
+    },
+    {
+      "id": "nantong_road_L_2-14",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_2",
+      "minzoom": 14,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {"line-color": "rgba(50, 70, 99, 1)", "line-width": 4}
+    },
+    {
+      "id": "nantong_road_L_2-13",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_2",
+      "minzoom": 13,
+      "maxzoom": 14,
+      "layout": {"visibility": "visible"},
+      "paint": {"line-color": "rgba(50, 70, 99, 1)", "line-width": 2}
+    },
+    {
+      "id": "nantong_road_L_2-10",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_2",
+      "minzoom": 9,
+      "maxzoom": 13,
+      "layout": {"visibility": "visible"},
+      "paint": {"line-color": "rgba(50, 70, 99, 1)", "line-width": 1}
+    },
+    {
+      "id": "nantong_road_L_2-8",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_2",
+      "minzoom": 8,
+      "maxzoom": 11,
+      "layout": {"visibility": "none"},
+      "paint": {"line-color": "rgba(50, 70, 99, 1)", "line-width": 1}
+    },
+    {
+      "id": "nantong_road_L_1-14",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_1",
+      "minzoom": 14,
+      "maxzoom": 24,
+      "layout": {"visibility": "none"},
+      "paint": {"line-color": "rgba(8, 46, 79, 1)", "line-width": 5}
+    },
+    {
+      "id": "nantong_road_L_1-11",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_1",
+      "minzoom": 11,
+      "maxzoom": 14,
+      "layout": {"visibility": "none"},
+      "paint": {"line-color": "rgba(8, 46, 79, 1)", "line-width": 3}
+    },
+    {
+      "id": "nantong_road_L_1-10",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_1",
+      "minzoom": 10,
+      "maxzoom": 11,
+      "layout": {"visibility": "none"},
+      "paint": {"line-color": "rgba(58, 100, 154, 1)", "line-width": 1}
+    },
+    {
+      "id": "nantong_road_L_1-82",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_1",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-color": "rgba(58, 100, 154, 1)",
+        "line-width": 1,
+        "line-translate": [2, -2]
+      }
+    },
+    {
+      "id": "nantong_road_L_1-8",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_1",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "layout": {"visibility": "none"},
+      "paint": {"line-color": "rgba(58, 100, 154, 1)", "line-width": 1}
+    },
+    {
+      "id": "nantong_road_L_1-72",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_1",
+      "minzoom": 7,
+      "maxzoom": 8,
+      "layout": {"visibility": "none"},
+      "paint": {
+        "line-color": "rgba(58, 100, 154, 1)",
+        "line-width": 1,
+        "line-translate": [2, -1]
+      }
+    },
+    {
+      "id": "nantong_road_L_1-7",
+      "type": "line",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_L_1",
+      "minzoom": 7,
+      "maxzoom": 8,
+      "layout": {"visibility": "none"},
+      "paint": {
+        "line-color": "rgba(58, 100, 154, 1)",
+        "line-width": 1,
+        "line-translate": [0, 0]
+      }
+    },
+    {
+      "id": "nantong_building_R-13",
+      "type": "fill-extrusion",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_building_R",
+      "minzoom": 11,
+      "maxzoom": 14,
+      "layout": {"visibility": "visible"},
+      "paint": {"fill-extrusion-color": "#809acb", "fill-extrusion-height": 0}
+    },
+    {
+      "id": "nantong_building_R-14",
+      "type": "fill-extrusion",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_building_R",
+      "minzoom": 14,
+      "maxzoom": 24,
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "fill-extrusion-color": "#809acb",
+        "fill-extrusion-height": {
+          "property": "HEIGHT",
+          "stops": [[0, 0], [24, 100]],
+          "type": "exponential"
+        }
+      }
+    },
+    {
+      "id": "nantong_road_label_L",
+      "type": "symbol",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_road_label_L",
+      "minzoom": 14,
+      "maxzoom": 24,
+      "layout": {
+        "visibility": "visible",
+        "text-field": "{PathName}",
+        "text-size": 11,
+        "symbol-placement": "line"
+      },
+      "paint": {
+        "text-color": "rgba(145, 145, 144, 1)",
+        "text-halo-color": "rgba(24, 24, 24, 1)",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "id": "nantong_poi_city",
+      "type": "symbol",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_poi_city",
+      "minzoom": 5,
+      "maxzoom": 8,
+      "layout": {
+        "text-field": "{NAME}",
+        "visibility": "visible",
+        "text-anchor": "bottom-left",
+        "text-size": 14,
+        "text-offset": [0.5, 0.5],
+        "icon-allow-overlap": false,
+        "text-font": ["Open Sans Regular"],
+        "icon-image": "circle-stroked-12"
+      },
+      "paint": {
+        "text-halo-color": "rgba(22, 21, 21, 0.5)",
+        "text-color": "rgba(131, 194, 238, 1)",
+        "text-halo-width": 0.5,
+        "text-opacity": 1,
+        "text-halo-blur": 1,
+        "text-translate": [0, 0]
+      }
+    },
+    {
+      "id": "nantong_poi_city_outside",
+      "type": "symbol",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_poi_city_outside",
+      "minzoom": 5,
+      "maxzoom": 9,
+      "layout": {
+        "text-field": "{NAME}",
+        "visibility": "visible",
+        "icon-image": "circle-12",
+        "text-anchor": "bottom-left",
+        "text-size": 12,
+        "text-offset": [0.5, 0.5]
+      },
+      "paint": {
+        "text-color": "rgba(14, 26, 53, 1)",
+        "text-halo-color": "rgba(86, 100, 135, 1)",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "id": "nantong_poi_county",
+      "type": "symbol",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_poi_county",
+      "minzoom": 8,
+      "maxzoom": 24,
+      "layout": {
+        "text-field": "{NAME}",
+        "visibility": "visible",
+        "text-anchor": "bottom-left",
+        "text-offset": [0.5, 0.5],
+        "text-font": ["", ""],
+        "text-size": 14,
+        "icon-image": "circle-stroked-12",
+        "text-justify": "center"
+      },
+      "paint": {
+        "text-color": "rgba(131, 194, 238, 1)",
+        "text-opacity": 1,
+        "text-halo-width": 2,
+        "text-halo-blur": 0,
+        "text-halo-color": "rgba(22, 21, 21, 0.5)"
+      }
+    },
+    {
+      "id": "nantong_poi_county_outside",
+      "type": "symbol",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_poi_county_outside",
+      "minzoom": 9,
+      "maxzoom": 24,
+      "layout": {
+        "text-field": "{NAME}",
+        "visibility": "visible",
+        "text-anchor": "center",
+        "icon-image": "",
+        "text-offset": [0.5, 0.5],
+        "text-font": ["", ""],
+        "text-size": 12
+      },
+      "paint": {
+        "text-color": "rgba(14, 26, 53, 1)",
+        "text-halo-color": "rgba(86, 100, 135, 1)",
+        "text-halo-width": 2
+      }
+    },
+    {
+      "id": "nantong_poi_town",
+      "type": "symbol",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_poi_town",
+      "minzoom": 14,
+      "maxzoom": 24,
+      "layout": {
+        "text-field": "{NAME}",
+        "text-size": 12,
+        "icon-image": "circle-12",
+        "text-justify": "left",
+        "text-anchor": "left",
+        "text-allow-overlap": false,
+        "text-keep-upright": true,
+        "text-optional": false,
+        "visibility": "visible",
+        "text-transform": "lowercase",
+        "text-offset": [0.5, 0]
+      },
+      "paint": {
+        "text-color": "rgba(115, 188, 236, 1)",
+        "text-halo-color": "rgba(0, 32, 66, 1)",
+        "icon-color": "rgba(255, 255, 255, 1)",
+        "icon-opacity": 1,
+        "icon-halo-color": "rgba(255, 255, 255, 1)",
+        "icon-halo-width": 1,
+        "text-halo-width": 1
+      }
+    },
+    {
+      "id": "nantong_poi_village",
+      "type": "symbol",
+      "source": "jiangsu_nantong",
+      "source-layer": "nantong_poi_village",
+      "minzoom": 15,
+      "maxzoom": 24,
+      "layout": {
+        "text-field": "{NAME}",
+        "text-size": 11,
+        "text-justify": "left",
+        "text-anchor": "left",
+        "icon-image": "circle-12",
+        "visibility": "visible",
+        "text-transform": "lowercase",
+        "text-offset": [0.5, 0]
+      },
+      "paint": {
+        "text-color": "rgba(131, 194, 238, 1)",
+        "text-halo-color": "rgba(33, 34, 34, 1)",
+        "text-halo-width": 1
+      }
+    }
+  ],
+  "id": "jiangsu_nantong_blue",
+  "owner": ""
+}

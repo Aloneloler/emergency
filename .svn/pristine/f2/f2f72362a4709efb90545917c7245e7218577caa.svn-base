@@ -1,0 +1,188 @@
+.triangleDiv {
+  border-right: 10px solid transparent;
+  border-left : 10px solid transparent;
+  border-top  : 10px solid;
+  position    : absolute;
+  z-index     : 1;
+  margin-top  : 119px;
+  margin-left : 70px;
+}
+
+.legendImg {
+  position: absolute;
+  z-index : 12;
+  width   : 130px;
+  height  : 190px;
+  left    : 100px;
+  bottom  : 30px;
+}
+
+.happendImg {
+  position          : absolute;
+  background        : white;
+  z-index           : 12;
+  right             : 30px;
+  top               : 20px;
+  width             : 380px;
+  height            : 470px;
+  overflow          : auto;
+  -ms-overflow-style: none;
+  /* Firefox */
+  overflow          : -moz-scrollbars-none;
+
+
+  .helpPower {
+    padding      : 10px;
+    text-align   : left;
+    font-weight  : 600;
+    border-bottom: 1px solid rgba(239, 240, 241, 1);
+    ;
+  }
+
+  .itemStyle {
+    height       : 94px;
+    margin-top   : 10px;
+    padding      : 10px;
+    text-align   : left;
+    font-weight  : 600;
+    border-bottom: 1px solid rgba(239, 240, 241, 1);
+  }
+
+  .typeDivOrange {
+    margin-top: 20px;
+    border    : 1px solid orange;
+    color     : orange;
+    width     : 65px;
+    height    : 25px;
+    float     : right;
+    text-align: center;
+  }
+
+  .typeDivRed {
+    margin-top: 20px;
+    border    : 1px solid red;
+    color     : red;
+    width     : 65px;
+    height    : 25px;
+    float     : right;
+    text-align: center;
+  }
+
+  .icon {
+    border       : 1px solid #ff0000;
+    border-radius: 10px;
+    color        : red;
+    padding      : 0px 13px;
+    font-size    : 16px;
+    margin       : 0px 18px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .wenzi {
+    font-size  : 20px;
+    color      : black;
+    font-family: sans-serif;
+  }
+
+  .titleDiv {
+    margin-top : 20px;
+    margin-left: 12px;
+  }
+
+  .fireImg {
+    width : 330px;
+    margin: 25px;
+    height: 195px;
+  }
+}
+
+.onLinespan {
+  font-size   : 12px;
+  margin-left : 20px;
+  margin-right: 80px;
+}
+
+/* 兼容chrome 和Safari*/
+.happendImg::-webkit-scrollbar {
+  width: 0 !important
+}
+
+.info {
+  position  : absolute;
+  z-index   : 12;
+  right     : 30px;
+  bottom    : 20px;
+  background: white;
+  width     : 380px;
+  height    : 550px;
+
+  .helpPower {
+    padding      : 10px;
+    text-align   : left;
+    font-weight  : 600;
+    border-bottom: 1px solid rgba(239, 240, 241, 1);
+    ;
+  }
+
+  .menuStyle {
+    height            : 390px;
+    overflow          : auto;
+    -ms-overflow-style: none;
+    /* Firefox */
+    overflow          : -moz-scrollbars-none;
+  }
+
+  /* 兼容chrome 和Safari*/
+  .menuStyle::-webkit-scrollbar {
+    width: 0 !important
+  }
+}
+
+.search {
+  margin    : 5px auto;
+  text-align: center;
+
+  .inputSearch {
+    width      : 80%;
+    margin     : 0 auto;
+    height     : 30px;
+    line-height: 30px;
+
+  }
+}
+
+.renyuanImg {
+  width   : 35px;
+  height  : 35px;
+  left    : 25px;
+  position: absolute;
+}
+
+.nameSpan {
+  font-size   : 12px;
+  margin-left : 20px;
+  margin-right: 170px;
+}
+
+.littleImg {
+  width : 20px;
+  height: 20px;
+  margin: 7px;
+}
+
+:global {
+  .ant-btn {
+    margin: 0px 25px;
+  }
+}
+
+.goback {
+  right        : 10px;
+  position     : absolute;
+  background   : white;
+  color        : red;
+  border-radius: 7px;
+}

@@ -1,0 +1,75 @@
+.header {
+  height: 79px;
+  background: rgba(30, 30, 45, 1);
+}
+
+.logoDiv {
+  float: left;
+  font-size: 24px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 1);
+
+}
+
+.logoDiv img {
+  line-height: 80px;
+  float: left;
+  margin: 17px 20px 0px 34px;
+}
+
+.logoDiv span {
+  display: inline-block;
+  line-height: 79px;
+}
+
+.userDiv {
+  float: right;
+  // margin-right: 30px;
+
+}
+
+.menuDiv {
+  float: right;
+  margin-right: 200px;
+}
+
+.menuDiv ul {
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+  list-style: none;
+}
+
+.menuDiv ul li {
+  float: left;
+  padding: 19px 0px;
+  height: 79px;
+  cursor: pointer;
+}
+
+.LeftMenuDivMainUlLi {
+  width: 158px;
+  text-align: center;
+  font-size: 16px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: rgba(154, 161, 183, 1);
+}
+
+.LeftMenuDivMainUlLiAction {
+  width: 158px;
+  background: rgba(0, 0, 0, 0.26);
+  font-size: 16px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  text-align: center;
+  color: rgba(255, 255, 255, 1);
+}
+
+.userDiv>span {
+  display: inline-block;
+  margin-right: 34px;
+  line-height: 79px;
+  cursor: pointer;
+}

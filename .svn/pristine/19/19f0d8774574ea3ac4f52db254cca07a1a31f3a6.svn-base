@@ -1,0 +1,49 @@
+.mapStyle {
+    height  : 100%;
+    width   : 100%;
+    z-index : 10;
+    position: absolute;
+    left    : 74px;
+    top     : 0px;
+}
+
+.popupContent {
+    background: white;
+    width     : 200px;
+    min-height: 100px;
+    max-height: 600px;
+    padding   : 10px;
+    position  : absolute;
+    left      : -90px;
+    top       : -180px;
+}
+
+.triangleDangerDiv {
+    border-right: 10px solid transparent;
+    border-left : 10px solid transparent;
+    border-top  : 10px solid white;
+    position    : absolute;
+    z-index     : 1;
+    margin-top  : 119px;
+    margin-left : 70px;
+}
+
+.menuDiv {
+    display : block;
+    z-index : 5555;
+    position: absolute;
+    left    : 100px;
+    top     : 100px;
+}
+
+.btnDelete {
+    padding   : 8px 16px;
+    display   : inline-block;
+    color     : #fff;
+    cursor    : pointer;
+    background: rgba(255, 8, 53, 0.85);
+    left      : 50%;
+    top       : 90%;
+    z-index   : 11;
+    position  : absolute;
+}

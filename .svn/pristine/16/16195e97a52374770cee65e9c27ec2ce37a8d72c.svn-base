@@ -1,0 +1,136 @@
+.Videoconferencing {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.Meeting {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  line-height: 100%;
+
+  .Meetinglf {
+    float: left;
+    width: 50%;
+    text-align: right;
+    height: 100%;
+
+    dl {
+      float: right;
+      margin-right: 34px;
+    }
+  }
+
+  .MeetingRt {
+    float: left;
+    width: 50%;
+    text-align: left;
+    height: 100%;
+
+    dl {
+      float: left;
+      margin-left: 34px;
+    }
+  }
+
+  dl {
+    height: 200px;
+    width: 170px;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    cursor: pointer;
+    /*偏移*/
+    margin-top: -100px;
+
+    dt {
+      img {
+        width: 170px;
+        height: 170px;
+      }
+    }
+  }
+}
+
+.close {
+  width: 17px;
+  height: 16px;
+  color: #939497;
+  font-size: 18px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.ejectDivTop {
+  font-size: 24px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: rgba(154, 154, 157, 1);
+  line-height: 41px;
+  padding: 65px 0px;
+  text-align: center;
+}
+
+.ejectDiv {
+  width: 490px;
+  height: 362px;
+  background: rgba(15, 17, 20, 1);
+  border-radius: 20px;
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  /*偏移*/
+  margin-top: -181px;
+
+}
+
+.ejectDivFooter {
+  width: 100%;
+  text-align: center;
+  margin-top: 59px;
+}
+
+.ejectDivMain {
+  width: 307px;
+  margin: 0 auto;
+  border-bottom: 1px solid rgba(245, 246, 247, 1);
+
+  :global {
+    .ant-input {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-variant: tabular-nums;
+      list-style: none;
+      font-feature-settings: 'tnum';
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      height: 32px;
+      padding: 4px 11px;
+      color: rgba(255, 255, 255, 1);
+      font-size: 14px;
+      line-height: 1.5;
+      background-color: rgba(245, 246, 247, 0);
+      background-image: none;
+      border: 1px solid rgba(245, 246, 247, 0);
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+  }
+}
+
+.iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  // margin-left: -110px;
+  // margin-top: -99px;
+  float: left;
+  border: 0;
+}
